@@ -2,7 +2,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='ensemble_ad',
+    name='ensemble_uncertainties',
     version='0.1',
     license='MIT',
     author='Thomas-Martin Dutschmann',
