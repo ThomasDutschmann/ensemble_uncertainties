@@ -1,0 +1,12 @@
+name: ensemble_ad_env
+channels:
+  - conda-forge
+dependencies:
+  - python
+  - numpy
+  - pandas
+  - scikit-learn
+  - tqdm
+  - matplotlib
+  - xgboost
+  - tensorflow>=2.6.0
