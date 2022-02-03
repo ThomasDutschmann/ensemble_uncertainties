@@ -31,13 +31,21 @@ cd ensemble_uncertainties/
 3. Create conda environment:
 
 ```console
+<<<<<<< HEAD
 conda env create -n ensemble_uncertainties -f conda-envs/ensemble_uncertainties.yaml
+=======
+conda env create -n ensemble_uncertainties -f conda-envs/ensemble_uncertainties_env.yaml
+>>>>>>> 565f630fab065150fa7114930533f86effcceaea
 ```
 
 4. Activate the environment:
 
 ```console
+<<<<<<< HEAD
 conda activate ensemble_uncertainties
+=======
+conda activate ensemble_uncertainties_env
+>>>>>>> 565f630fab065150fa7114930533f86effcceaea
 ```
 
 5. Install the maxsmi package:
