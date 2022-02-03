@@ -46,11 +46,18 @@ pip install -e .
 ```
 
 # How To Use
-## Examples
-### Running an evaluation
+## Running an evaluation
 
 The exectuable provides helpful information of all the (necessary) command line arguments:
 
 ```console
 python ensemble_uncertainties/exectuable.py -h
 ```
+
+For example, if you want to evaluate support vector regression on the provided Tetrahymena toxicity data set featurized by RDKit descriptors with 5 repetitions and a 5-fold, storing the output in my_test_results_folder/, you run the executable like so:
+
+```console
+python ensemble_uncertainties/executable.py -r 5 -n 5 -x test_data/tetrahymena/tetrah_X.csv -y test_data/tetrahymena/tetrah_y.csv -m SVM -t regression -o my_test_results_folder/ -v
+```
+
+Note: It is important that the CSV-files are semicolon-separated, have a header, have an index column named "id" at the first position and that the output values in the y-files are in a column named "y". See the provided test files in ensemble_uncertainties/test_data/.

@@ -111,7 +111,6 @@ class MathTests(unittest.TestCase):
             results['preds_1'],
             results['probs_3']
         )
-        print(accuracies_3)
         for acc, expected_acc in zip(accuracies_3, expected_accuracies):
             self.assertAlmostEqual(acc, expected_acc, 5)        
 
