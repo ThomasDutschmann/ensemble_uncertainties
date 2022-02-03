@@ -1,0 +1,33 @@
+
+# Python-generated
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Remains of package creation
+.Python
+env/
+develop-eggs/
+eggs/
+.eggs/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# env and virtual env
+.env
+.venv
+venv/
+ENV/
+
+# MacOS
+.DS_Store
+
+# VScode
+.vscode
+
+# Results
+test_results/
