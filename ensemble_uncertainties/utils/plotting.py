@@ -6,9 +6,12 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
 
-from utils.ad_assessment import rmses_frac, cumulative_accuracy
+from ensemble_uncertainties.utils.ad_assessment import (
+    rmses_frac,
+    cumulative_accuracy
+)
 
-from constants import DPI, DEF_COLOR
+from ensemble_uncertainties.constants import DPI, DEF_COLOR
 
 from sklearn.metrics import roc_curve
 

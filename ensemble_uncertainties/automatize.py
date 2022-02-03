@@ -7,15 +7,21 @@ import os
 import pickle
 import shutil
 
-from constants import N_SPLITS, RANDOM_SEED, REPS
+from ensemble_uncertainties.constants import N_SPLITS, RANDOM_SEED, REPS
 
 from datetime import datetime
 
-from evaluators.evaluator_support import format_time_elapsed
-from evaluators.classification_evaluator import ClassificationEvaluator
-from evaluators.regression_evaluator import RegressionEvaluator
+from ensemble_uncertainties.evaluators.evaluator_support import (
+    format_time_elapsed
+)
+from ensemble_uncertainties.evaluators.classification_evaluator import (
+    ClassificationEvaluator
+)
+from ensemble_uncertainties.evaluators.regression_evaluator import (
+    RegressionEvaluator
+)
 
-from utils.plotting import (
+from ensemble_uncertainties.utils.plotting import (
     plot_r2,
     plot_confidence,
     plot_scatter,

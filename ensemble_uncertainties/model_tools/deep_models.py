@@ -6,7 +6,7 @@ import os
 
 import tensorflow as tf
 
-from constants import BATCH_SIZE, EPOCHS, RANDOM_SEED
+from ensemble_uncertainties.constants import BATCH_SIZE, EPOCHS, RANDOM_SEED
 
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense

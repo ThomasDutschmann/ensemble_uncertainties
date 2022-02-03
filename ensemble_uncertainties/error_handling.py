@@ -4,7 +4,7 @@
 import errno
 import logging
 
-from model_tools.model_library import models
+from ensemble_uncertainties.model_tools.model_library import models
 
 from os.path import isfile
 

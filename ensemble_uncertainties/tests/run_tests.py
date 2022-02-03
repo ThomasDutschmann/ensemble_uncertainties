@@ -4,9 +4,9 @@
 import os
 import unittest
 
-from automatize import run_evaluation
+from ensemble_uncertainties.automatize import run_evaluation
 
-from executable import load_data, parse_model
+from ensemble_uncertainties.executable import load_data, parse_model
 
 
 class RunTests(unittest.TestCase):

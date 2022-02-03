@@ -5,7 +5,10 @@ import unittest
 
 import pandas as pd
 
-from utils.ad_assessment import cumulative_accuracy, rmses_frac
+from ensemble_uncertainties.utils.ad_assessment import (
+    cumulative_accuracy,
+    rmses_frac
+)
 
 
 class MathTests(unittest.TestCase):

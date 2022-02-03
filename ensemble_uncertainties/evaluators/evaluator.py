@@ -6,13 +6,13 @@ import pandas as pd
 
 from abc import abstractmethod
 
-from constants import N_SPLITS, RANDOM_SEED, REPS
+from ensemble_uncertainties.constants import N_SPLITS, RANDOM_SEED, REPS
 
 from copy import deepcopy
 
 from datetime import datetime
 
-from evaluators.evaluator_support import (
+from ensemble_uncertainties.evaluators.evaluator_support import (
     format_time_elapsed,
     make_columns,
     make_array,

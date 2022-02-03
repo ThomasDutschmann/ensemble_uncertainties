@@ -3,7 +3,7 @@
 
 import argparse
 
-from constants import N_SPLITS, RANDOM_SEED, REPS
+from ensemble_uncertainties.constants import N_SPLITS, RANDOM_SEED, REPS
 
 
 parser = argparse.ArgumentParser(

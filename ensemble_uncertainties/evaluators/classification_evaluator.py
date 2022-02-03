@@ -3,9 +3,9 @@
 
 import pandas as pd
 
-from constants import N_SPLITS, RANDOM_SEED, REPS
+from ensemble_uncertainties.constants import N_SPLITS, RANDOM_SEED, REPS
 
-from evaluators.evaluator import Evaluator
+from ensemble_uncertainties.evaluators.evaluator import Evaluator
 
 from sklearn.metrics import accuracy_score
 

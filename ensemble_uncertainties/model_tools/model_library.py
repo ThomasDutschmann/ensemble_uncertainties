@@ -1,7 +1,7 @@
 
 """Collection of machine learning methods to apply."""
 
-from model_tools.deep_models import (
+from ensemble_uncertainties.model_tools.deep_models import (
     DeepClassifier,
     DeepRegressor
 )

@@ -7,8 +7,6 @@ python executable.py -x X_rdkit.csv -y y.csv -r 10 -t regression -m SVM -v
                      -o results/
 """
 
-import logging
-
 import pandas as pd
 
 from argparser import parser
@@ -23,7 +21,7 @@ from error_handling import (
     y_file_compatibility
 )
 
-from model_tools.model_library import models
+from ensemble_uncertainties.model_tools.model_library import models
 
 
 def main():
