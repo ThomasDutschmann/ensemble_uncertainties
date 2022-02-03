@@ -40,7 +40,7 @@ conda env create -n ensemble_uncertainties -f conda-envs/ensemble_uncertainties.
 conda activate ensemble_uncertainties
 ```
 
-5. Install the maxsmi package:
+5. Install it as a package:
 ```console
 pip install -e .
 ```
