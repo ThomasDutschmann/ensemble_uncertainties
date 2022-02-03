@@ -10,7 +10,8 @@ Framework to evaluate predictive uncertainties by generating k-fold cross-valida
 
 Especially during the early stages of drug development, molecular property prediction relies heavily on machine learning techniques to guide the emerging experimental design. For a comprehensive evaluation of model quality, it is crucial to outline the limitations of a model beyond its predictive performance.<sup>[1]</sup> While alternative strategies to obtain such predictive uncertainties exist, the construction of ensembles remains the established standard.<sup>[2,3]</sup> However, most uncertainty evaluations consider only a small and well-known selection of datasets, and only one or two different sets of descriptors. Whether the ensemble method produces reasonable uncertainties for virtually any chemoinformatics setup requires a more diversified evaluation. This project aims to automatize the evaluation of ensemble-based uncertainties by generating balanced subsamples of the dataset using k-fold cross-validation.
 
-<img width="973" alt="cover_picture" src="https://user-images.githubusercontent.com/12691168/152394859-37bee0da-9033-41ca-9376-b87ae42f0721.png">
+<img width="1221" alt="cover_picture" src="https://user-images.githubusercontent.com/12691168/152408380-835cab07-1dc9-4af7-807d-5de7ad042eb8.png">
+
 
 # Installation Using conda
 
