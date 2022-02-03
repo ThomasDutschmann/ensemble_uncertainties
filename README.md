@@ -5,19 +5,19 @@ ensemble_uncertainties
 Framework to evaluate predictive uncertainties by generating k-fold cross-validation ensembles.
 
 
-# Project description
+# Project Description
 ## Evaluation of the Ensemble Variance as an Estimator of Prediction Uncertainty
 
 Especially during the early stages of drug development, molecular property prediction relies heavily on machine learning techniques to guide the emerging experimental design. For a comprehensive evaluation of model quality, it is crucial to outline the limitations of a model beyond its predictive performance.<sup>[1]</sup> While alternative strategies to obtain such predictive uncertainties exist, the construction of ensembles remains the established standard.<sup>[2,3]</sup> However, most uncertainty evaluations consider only a small and well-known selection of datasets, and only one or two different sets of descriptors. Whether the ensemble method produces reasonable uncertainties for virtually any chemoinformatics setup requires a more diversified evaluation. This project aims to automatize the evaluation of ensemble-based uncertainties by generating balanced subsamples of the dataset using k-fold cross-validation.
 
 <img width="973" alt="cover_picture" src="https://user-images.githubusercontent.com/12691168/152394859-37bee0da-9033-41ca-9376-b87ae42f0721.png">
 
-# Installation using conda
+# Installation Using conda
 
 ## Prerequisites
-Anaconda and Git should be installed. See [Anaconda's website](https://www.anaconda.com) and [Git's website](https://git-scm.com/downloads) for download.
+Anaconda and Git should be installed. If not, check out [Anaconda's website](https://www.anaconda.com) and [Git's website](https://git-scm.com/downloads).
 
-## How to install
+## How To Install
 
 1. Clone repository:
 ```console
@@ -35,13 +35,13 @@ cd ensemble_uncertainties/
 conda env create -n ensemble_uncertainties -f conda-envs/ensemble_uncertainties.yaml
 ```
 
-4. Activate the environment:
+4. Activate environment:
 
 ```console
 conda activate ensemble_uncertainties
 ```
 
-5. Install it as a package:
+5. Install ensemble_uncertainties as a package:
 ```console
 pip install -e .
 ```
@@ -77,4 +77,4 @@ Furthermore, when using the default environment, the only available version of T
 
 [4] F. Cheng, J. Shen, Y. Yu, W. Li, G. Liu, P. W. Lee, Y. Tang, Chemosphere 2011, 82, 1636–1643.
 
-[5] W. Klingspohn, M. Mathea, M., A. ter Laak, N. Heinrich, K. Baumann, J. Cheminform. 2017, 9, 44.
+[5] W. Klingspohn, M. Mathea, A. ter Laak, N. Heinrich, K. Baumann, J. Cheminform. 2017, 9, 44.
