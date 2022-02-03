@@ -1,4 +1,4 @@
-name: ensemble_ad_env
+name: ensemble_uncertainties
 channels:
   - conda-forge
 dependencies:
