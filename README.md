@@ -77,4 +77,8 @@ Furthermore, when using the default environment, the only available version of T
 
 [4] F. Cheng, J. Shen, Y. Yu, W. Li, G. Liu, P. W. Lee, Y. Tang, Chemosphere 2011, 82, 1636–1643.
 
+<<<<<<< HEAD
 [5] W. Klingspohn, M. Mathea, A. ter Laak, N. Heinrich, K. Baumann, J. Cheminform. 2017, 9, 44.
+=======
+[5] W. Klingspohn, M. Mathea, A. ter Laak, N. Heinrich, K. Baumann, J. Cheminform. 2017, 9, 44.
+>>>>>>> 728e5ab0696e0fddd2728cce7260c63af406ae17
