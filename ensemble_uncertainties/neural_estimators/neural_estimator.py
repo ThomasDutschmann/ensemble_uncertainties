@@ -103,6 +103,8 @@ class NeuralEstimator:
 class DeepNeuralClassifier(NeuralEstimator):
     """Deep classification-specific extension, based on:"""
 
+    __doc__ += NeuralEstimator.__doc__
+
     def __init__(self, epochs=EPOCHS, batch_size=BATCH_SIZE):
         super().__init__(
             loss='binary_crossentropy',
@@ -115,6 +117,8 @@ class DeepNeuralClassifier(NeuralEstimator):
 
 class DeepNeuralRegressor(NeuralEstimator):
     """Deep regression-specific extension, based on:"""
+
+    __doc__ += NeuralEstimator.__doc__
 
     def __init__(self, epochs=EPOCHS, batch_size=BATCH_SIZE):
         super().__init__(
@@ -129,6 +133,8 @@ class DeepNeuralRegressor(NeuralEstimator):
 class ShallowNeuralClassifier(NeuralEstimator):
     """Shallow classification-specific extension, based on:"""
 
+    __doc__ += NeuralEstimator.__doc__
+
     def __init__(self, epochs=EPOCHS, batch_size=BATCH_SIZE):
         super().__init__(
             loss='binary_crossentropy',
@@ -141,6 +147,8 @@ class ShallowNeuralClassifier(NeuralEstimator):
 
 class ShallowNeuralRegressor(NeuralEstimator):
     """Shallow regression-specific extension, based on:"""
+
+    __doc__ += NeuralEstimator.__doc__
 
     def __init__(self, epochs=EPOCHS, batch_size=BATCH_SIZE):
         super().__init__(
