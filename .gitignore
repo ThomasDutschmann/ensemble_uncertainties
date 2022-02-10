@@ -14,7 +14,10 @@ eggs/
 .installed.cfg
 *.egg
 
-# Jupyter Notebook checkpoints
+# Jupyter notebooks for testing
+test_notebooks/
+
+# Jupyter notebook checkpoints
 .ipynb_checkpoints
 
 # env and virtual env
