@@ -9,11 +9,11 @@ python executable.py -x X_rdkit.csv -y y.csv -r 10 -t regression -m SVM -v
 
 import pandas as pd
 
-from argparser import parser
+from ensemble_uncertainties.argparser import parser
 
-from automatize import run_evaluation
+from ensemble_uncertainties.automatize import run_evaluation
 
-from error_handling import (
+from ensemble_uncertainties.error_handling import (
     file_availability,
     file_compatibility,
     model_availability,
@@ -21,7 +21,7 @@ from error_handling import (
     y_file_compatibility
 )
 
-from ensemble_uncertainties.model_tools.model_library import models
+from ensemble_uncertainties.model_library import models
 
 
 def main():

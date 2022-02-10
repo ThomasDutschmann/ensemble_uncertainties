@@ -12,7 +12,7 @@ eggs/
 .eggs/
 *.egg-info/
 .installed.cfg
-*.egg
+*.egg*
 
 # Jupyter notebooks for testing
 test_notebooks/
