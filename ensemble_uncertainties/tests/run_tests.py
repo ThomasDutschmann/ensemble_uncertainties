@@ -70,7 +70,7 @@ class RunTests(unittest.TestCase):
         about 12 minutes on my RTX 3080 Ti.
         """
         for task in ['classification', 'regression']:
-            for model_name in ['SL', 'DL', 'SVM', 'XGB', 'RF']:
+            for model_name in ['shallow', 'deep', 'svm', 'xgb', 'rf']:
                 self.error_free_evaluation(task, model_name)
 
 

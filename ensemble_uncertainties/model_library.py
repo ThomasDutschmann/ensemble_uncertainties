@@ -21,21 +21,21 @@ from xgboost import XGBClassifier, XGBRegressor
 # --------------
 models = dict()
 models['classification'] = dict()
-models['classification']['RF'] = RandomForestClassifier()
-models['classification']['SVM'] = SVC()
-models['classification']['XGB'] = XGBClassifier(use_label_encoder=False)
-models['classification']['DL'] = DeepNeuralClassifier()
-models['classification']['SL'] = ShallowNeuralClassifier()
+models['classification']['rf'] = RandomForestClassifier()
+models['classification']['svm'] = SVC()
+models['classification']['xgb'] = XGBClassifier(use_label_encoder=False)
+models['classification']['deep'] = DeepNeuralClassifier()
+models['classification']['shallow'] = ShallowNeuralClassifier()
 
 
 # Regression
 # ----------
 models['regression'] = dict()
-models['regression']['RF'] = RandomForestRegressor()
-models['regression']['SVM'] = SVR()
-models['regression']['XGB'] = XGBRegressor()
-models['regression']['DL'] = DeepNeuralRegressor()
-models['regression']['SL'] = ShallowNeuralRegressor()
+models['regression']['rf'] = RandomForestRegressor()
+models['regression']['svm'] = SVR()
+models['regression']['xgb'] = XGBRegressor()
+models['regression']['deep'] = DeepNeuralRegressor()
+models['regression']['shallow'] = ShallowNeuralRegressor()
 
 
 # Add your custom model like so:
