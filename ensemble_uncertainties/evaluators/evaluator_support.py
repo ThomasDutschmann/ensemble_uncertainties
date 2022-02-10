@@ -63,18 +63,7 @@ def make_columns(repetitions, n_splits):
 
 
 def make_array(dim):
-    """Builds empty tables to store objects (like filters and scalers) into.
-
-    Parameters
-    ----------
-    dim : tuple
-        Dimensions of the desired matrix
-
-    Returns
-    -------
-    np.array
-        Empty array of type 'object'
-    """
+    """Makes an empty table (dim[0] x dim[1]) to store objects into."""
     return np.empty(dim, dtype=object)
 
 
