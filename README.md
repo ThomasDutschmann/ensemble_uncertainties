@@ -55,13 +55,13 @@ The executable provides helpful information of all the (necessary) command line 
 python ensemble_uncertainties/exectuable.py -h
 ```
 
-For example, if you want to evaluate support vector regression on the provided Tetrahymena toxicity data set<sup>[4]</sup> featurized by RDKit descriptors with 5 repetitions and a 5-fold, storing the output in my_test_results_folder/, you run the executable like so:
+For example, if you want to evaluate support vector regression on the provided Tetrahymena toxicity data set<sup>[4]</sup> (first 100 entries, featurized by RDKit descriptors) with 5 repetitions and a 5-fold, storing the output in my_test_results_folder/, you run the executable like so:
 
 ```console
-python ensemble_uncertainties/executable.py -r 5 -n 5 -x test_data/tetrahymena/tetrah_X.csv -y test_data/tetrahymena/tetrah_y.csv -m SVM -t regression -o my_test_results_folder/ -v
+python ensemble_uncertainties/executable.py -r 5 -n 5 -x test_data/tetrahymena/tetrah_X.csv -y test_data/tetrahymena/tetrah_y.csv -m svm -t regression -o my_test_results_folder/ -v
 ```
 
-To test the classification case, the CYP1A2 dataset from the applicability domain study by Klingspohn et al. is provided.<sup>[5]</sup>
+To test the classification case, the first 100 entries of the CYP1A2 dataset from the applicability domain study by Klingspohn et al. is provided.<sup>[5]</sup>
 
 Note: It is important that the CSV-files are semicolon-separated, have a header, have an index column named "id" at the first position and that the output values in the y-files are in a column named "y". See the provided test files in test_data/.
 Furthermore, when using the default environment, the only available version of TensorFlow is the one with GPU support.
