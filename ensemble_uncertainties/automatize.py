@@ -176,9 +176,8 @@ def models_to_file(evaluator, path):
             mpath = f'{models_path}model_{rep_i}_{fold_i}'
             model = evaluator.models[rep_i][fold_i]
             # Store deep estimator
-            if 'model_tools.deep_models.' in str(type(model)):
-                model.save(f'{mpath}.h5')
-            elif 'keras.engine.sequential.Sequential' in str(type(model)):
+            if 'neural_estimators.neural_estimator.' in str(type(model)) or \
+                'keras.engine.sequential.Sequential' in str(type(model)):
                 model.save(f'{mpath}.h5')
             # Store scikit-learn model
             else:

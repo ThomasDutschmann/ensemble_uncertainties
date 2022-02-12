@@ -28,8 +28,11 @@ def main():
     """Entry point."""
     args = parser.parse_args()
     writing_accessibility(args.output_path)
-    X, y = load_data(args.X_path, args.y_path)
     model = parse_model(args.task, args.model_name)
+    X, y = load_data(args.X_path, args.y_path)
+    # Change type of X to int to avoid scaling (when using fingerprints)
+    if args.model_name == 'svm_tanimoto':
+        X = X.astype('int64')
     run_evaluation(
         model=model,
         task=args.task,

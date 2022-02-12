@@ -168,7 +168,12 @@ class Evaluator:
         """
         # Define variance threshold filter and scaler
         vt = VarianceThreshold().fit(X_tr)
-        scaler = StandardScaler().fit(vt.transform(X_tr))
+        # Do not scale if all variables are bit-encoded (fingrprints)
+        if len(set(X_tr.dtypes)) == 1 and X_tr.dtypes[0] == np.dtype('int64'):
+            pre_scaler = StandardScaler(with_mean=False, with_std=False)
+        else:
+            pre_scaler = StandardScaler()
+        scaler = pre_scaler.fit(vt.transform(X_tr))
         self.vt_filters[rep_index][split_index] = vt
         self.scalers[rep_index][split_index] = scaler
         # Variance-filter and scale train inputs

@@ -8,10 +8,13 @@ from ensemble_uncertainties.neural_estimators.neural_estimator import (
     ShallowNeuralRegressor
 )
 
+from ensemble_uncertainties.utils.kernel_functions import tanimoto
+
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 from sklearn.svm import SVC, SVR
 
 from xgboost import XGBClassifier, XGBRegressor
+
 
 # Custom models must be imported:
 #from my_module.my_file import my_fancy_regression_model
@@ -22,7 +25,8 @@ from xgboost import XGBClassifier, XGBRegressor
 models = dict()
 models['classification'] = dict()
 models['classification']['rf'] = RandomForestClassifier()
-models['classification']['svm'] = SVC()
+models['classification']['svm_rbf'] = SVC(kernel='rbf')
+models['classification']['svm_tanimoto'] = SVC(kernel=tanimoto)
 models['classification']['xgb'] = XGBClassifier(use_label_encoder=False)
 models['classification']['deep'] = DeepNeuralClassifier()
 models['classification']['shallow'] = ShallowNeuralClassifier()
@@ -32,7 +36,8 @@ models['classification']['shallow'] = ShallowNeuralClassifier()
 # ----------
 models['regression'] = dict()
 models['regression']['rf'] = RandomForestRegressor()
-models['regression']['svm'] = SVR()
+models['regression']['svm_rbf'] = SVR(kernel='rbf')
+models['regression']['svm_tanimoto'] = SVR(kernel=tanimoto)
 models['regression']['xgb'] = XGBRegressor()
 models['regression']['deep'] = DeepNeuralRegressor()
 models['regression']['shallow'] = ShallowNeuralRegressor()
