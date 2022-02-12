@@ -11,7 +11,7 @@ from ensemble_uncertainties.utils.ad_assessment import (
 )
 
 
-class MathTests(unittest.TestCase):
+class ADAssessmentTests(unittest.TestCase):
 
     def test_rmses_fracs(self):
         """Evaluate confidence estimation on hard-coded example."""

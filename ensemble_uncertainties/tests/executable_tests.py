@@ -14,7 +14,7 @@ from ensemble_uncertainties.automatize import run_evaluation
 from ensemble_uncertainties.executable import load_data, parse_model
 
 
-class RunTests(unittest.TestCase):
+class ExecutableTests(unittest.TestCase):
 
     def error_free_evaluation(self, task, model_name, X, y):
         """Check if evaluation runs without errors.
