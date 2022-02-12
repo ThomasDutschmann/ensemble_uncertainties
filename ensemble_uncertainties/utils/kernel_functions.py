@@ -22,6 +22,7 @@ def tanimoto(A, B):
         Tanimoto similarity (\in [0, 1])
     """
     def metric(a, b):
+        # Check where both entries have a 1
         ab = np.sum((a + b) == 2)
         return ab / (np.sum(a) + np.sum(b) - ab)
     return pairwise_distances(A, B, metric=metric)
