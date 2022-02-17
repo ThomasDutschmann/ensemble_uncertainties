@@ -3,6 +3,7 @@
 
 import errno
 import logging
+import sys
 
 from ensemble_uncertainties.model_library import models
 
@@ -22,7 +23,7 @@ def file_availability(path):
     """
     if not isfile(path):
         logging.error(f'File "{path}" does not exist.')
-        exit(1)        
+        sys.exit(1)        
 
 
 def file_compatibility(path):
@@ -41,7 +42,7 @@ def file_compatibility(path):
                 'The file must be a semicolon-separated CSV-file ' + \
                 'with a header and an index column named "id".'
             )
-            exit(1)
+            sys.exit(1)
 
 
 def y_file_compatibility(path):
@@ -61,7 +62,7 @@ def y_file_compatibility(path):
                 'with a header and an index column named "id" and ' + \
                 'the column of targets must be named "y".'
             )
-            exit(1)  
+            sys.exit(1)  
 
 
 def model_availability(task, model_name):
@@ -81,7 +82,7 @@ def model_availability(task, model_name):
             f'Model "{model_name}" is not available.\n' +
             f'Available models are: {", ".join(names)}.'
         )
-        exit(1)
+        sys.exit(1)
 
 
 def writing_accessibility(path):
@@ -97,4 +98,4 @@ def writing_accessibility(path):
     except IOError as e:
         if e.errno == errno.EACCES:
             logging.error(f'No permission to write in "{path}."')
-            exit(1)
+            sys.exit(1)
