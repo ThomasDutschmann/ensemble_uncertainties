@@ -94,8 +94,6 @@ def plot_confidence(evaluator, frac=1.0, text=None, path=''):
     plt.plot(x_space, oracle_rmses, label='Best (oracle)', color='k')
     plt.plot(x_space, measure_rmses, label='Uncertainty', color=DEF_COLOR,
         zorder=100)
-    # Compute area
-    area = sum([(m - o) for m, o in zip(measure_rmses, oracle_rmses)])
     # Put descriptions
     if text:
         plt.text(90.0*frac, .9*oracle_rmses[0], text, fontsize=20)
@@ -105,7 +103,6 @@ def plot_confidence(evaluator, frac=1.0, text=None, path=''):
     if path:
         plt.savefig(f'{path}confidence.png', bbox_inches='tight',
             pad_inches=0.01)
-    return area
 
 
 def plot_scatter(evaluator, path=''):
