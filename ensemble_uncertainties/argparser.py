@@ -7,7 +7,7 @@ from ensemble_uncertainties.constants import N_SPLITS, RANDOM_SEED, REPS
 
 
 parser = argparse.ArgumentParser(
-    prog='eade',
+    prog='ensemble_uncertainties/executable',
     description='Application to evaluate repetitive k-fold ensemble ADs.'
 )
 
@@ -93,5 +93,13 @@ parser.add_argument(
     '--verbose',
     dest='verbose',
     help='if set, much output will be produced',
+    action='store_true',
+)
+
+parser.add_argument(
+    '-d',
+    '--deactivate_scaling',
+    dest='deactivate_scaling',
+    help='if set, variable scaling is deactivated (for Tanimoto kernel)',
     action='store_true',
 )

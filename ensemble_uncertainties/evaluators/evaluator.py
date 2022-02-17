@@ -33,7 +33,7 @@ class Evaluator:
     """
 
     def __init__(self, model, verbose=True, repetitions=REPS,
-            n_splits=N_SPLITS, seed=RANDOM_SEED):
+            n_splits=N_SPLITS, seed=RANDOM_SEED, scale=True):
         """Initializer, sets constants and initializes empty tables.
         
         Parameters
@@ -49,7 +49,16 @@ class Evaluator:
             number of splits in KFold, default: N_SPLITS
         seed : int
             Seed to use for splitting, default: RANDOM_SEED
+        scale : bool
+            Whether standardize variables, default: True
         """
+        # Set given parameters
+        self.model = model
+        self.verbose = verbose
+        self.repetitions = repetitions
+        self.n_splits = n_splits
+        self.seed = seed
+        self.scale = scale
         # Initialize list- and table-like members
         # to conveniently append data to them
         self.train_preds = pd.DataFrame()
@@ -60,12 +69,6 @@ class Evaluator:
         self.test_ensemble_preds = pd.DataFrame()
         self.train_qualities = list()
         self.test_qualities = list()
-        # Set given parameters
-        self.model = model
-        self.verbose = verbose
-        self.repetitions = repetitions
-        self.n_splits = n_splits
-        self.seed = seed
 
     def initialize_before_run(self):
         """Sets seed, initializes empty matrices and starts timer."""
@@ -168,11 +171,11 @@ class Evaluator:
         """
         # Define variance threshold filter and scaler
         vt = VarianceThreshold().fit(X_tr)
-        # Do not scale if all variables are bit-encoded (fingrprints)
-        if len(set(X_tr.dtypes)) == 1 and X_tr.dtypes[0] == np.dtype('int64'):
-            pre_scaler = StandardScaler(with_mean=False, with_std=False)
-        else:
+        # Do not perform scaling if scale is False
+        if self.scale:
             pre_scaler = StandardScaler()
+        else:
+            pre_scaler = StandardScaler(with_mean=False, with_std=False)
         scaler = pre_scaler.fit(vt.transform(X_tr))
         self.vt_filters[rep_index][split_index] = vt
         self.scalers[rep_index][split_index] = scaler

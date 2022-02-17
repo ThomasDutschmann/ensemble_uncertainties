@@ -30,9 +30,7 @@ def main():
     writing_accessibility(args.output_path)
     model = parse_model(args.task, args.model_name)
     X, y = load_data(args.X_path, args.y_path)
-    # Change type of X to int to avoid scaling (when using fingerprints)
-    if args.model_name == 'svm_tanimoto':
-        X = X.astype('int64')
+    scale = not args.deactivate_scaling
     run_evaluation(
         model=model,
         task=args.task,
@@ -42,6 +40,7 @@ def main():
         repetitions=args.repetitions,
         n_splits=args.n_splits, 
         seed=args.seed,
+        scale=scale,
         path=args.output_path,
         args=args
     )

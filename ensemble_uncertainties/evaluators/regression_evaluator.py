@@ -16,8 +16,15 @@ class RegressionEvaluator(Evaluator):
     __doc__ += Evaluator.__doc__
 
     def __init__(self, model, verbose=True, repetitions=REPS,
-            n_splits=N_SPLITS, seed=RANDOM_SEED):
-        super().__init__(model, verbose, repetitions, n_splits, seed)
+            n_splits=N_SPLITS, seed=RANDOM_SEED, scale=True):
+        super().__init__(
+            model=model,
+            verbose=verbose,
+            repetitions=repetitions,
+            n_splits=n_splits,
+            seed=seed,
+            scale=scale
+        )
         self.task = 'regression'
         self.metric = r2_score
         self.metric_name = 'R^2'

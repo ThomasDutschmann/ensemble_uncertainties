@@ -31,7 +31,7 @@ from ensemble_uncertainties.utils.plotting import (
 
 
 def run_evaluation(model, task, X, y, verbose=True, repetitions=REPS,
-        n_splits=N_SPLITS, seed=RANDOM_SEED, path=None, args=None,
+        n_splits=N_SPLITS, seed=RANDOM_SEED, scale=True, path=None, args=None,
         follow_up=None):
     """Runs evaluation with an EnsembleADEvaluator for given settings.
 
@@ -56,6 +56,8 @@ def run_evaluation(model, task, X, y, verbose=True, repetitions=REPS,
         Number of splits in k-fold, default: constants.N_SPLITS
     seed : int
         Seed to use for splitting, default: constants.RANDOM_SEED
+    scale : bool
+        Whether standardize variables, default: True
     path : str
         Path to the directory to store the results in, default: None
     args : argparse.Namespace
@@ -70,11 +72,17 @@ def run_evaluation(model, task, X, y, verbose=True, repetitions=REPS,
         print()
     # Initialize evaluator
     if task == 'classification':
-        evaluator = ClassificationEvaluator(model=model, verbose=verbose,
-            repetitions=repetitions, n_splits=n_splits, seed=seed)
+        evaluator_type = ClassificationEvaluator
     elif task == 'regression':
-        evaluator = RegressionEvaluator(model=model, verbose=verbose,
-            repetitions=repetitions, n_splits=n_splits, seed=seed)
+        evaluator_type = RegressionEvaluator
+    evaluator = evaluator_type(
+        model=model,
+        verbose=verbose,
+        repetitions=repetitions,
+        n_splits=n_splits,
+        seed=seed,
+        scale=scale
+    )
     # Run evaluation
     evaluator.perform(X, y)
     # Store input space transformers, models, and single repetition
