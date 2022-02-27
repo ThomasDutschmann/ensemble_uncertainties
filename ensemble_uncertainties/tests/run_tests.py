@@ -70,7 +70,7 @@ class ExecutableTests(unittest.TestCase):
         cyp1a2_moe_path = f'{cyp1a2_folder}CYP1A2_MOE_first100.csv'
         cyp1a2_y_path = f'{cyp1a2_folder}CYP1A2_y_first100.csv'
         X, y = load_data(cyp1a2_moe_path, cyp1a2_y_path)
-        for model_name in ['shallow', 'deep', 'svm_rbf', 'xgb', 'rf']:
+        for model_name in ['shallow', 'deep', 'svm_rbf', 'xgb', 'rf', 'dt']:
             self.error_free_evaluation('classification', model_name, X, y)
 
     def test_all_regression_types(self):
@@ -79,7 +79,7 @@ class ExecutableTests(unittest.TestCase):
         tetrah_rdkit_path = f'{tetrah_folder}tetrah_rdkit_first100.csv'
         tetrah_y_path = f'{tetrah_folder}tetrah_y_first100.csv'
         X, y = load_data(tetrah_rdkit_path, tetrah_y_path)
-        for model_name in ['shallow', 'deep', 'svm_rbf', 'xgb', 'rf']:
+        for model_name in ['shallow', 'deep', 'svm_rbf', 'xgb', 'rf', 'dt']:
             self.error_free_evaluation('regression', model_name, X, y)
 
     def test_tanimoto_performance(self):
