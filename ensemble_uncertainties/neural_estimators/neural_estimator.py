@@ -11,13 +11,21 @@ from ensemble_uncertainties.neural_estimators.architectures import (
     shallow_architecture
 )
 
-from ensemble_uncertainties.constants import BATCH_SIZE, EPOCHS, RANDOM_SEED
+from ensemble_uncertainties.constants import (
+    BATCH_SIZE,
+    EPOCHS,
+    MEMORY_GROWTH,
+    RANDOM_SEED
+)
 
 # Turn off learning monitoring
 logging.getLogger('tensorflow').setLevel(logging.FATAL)
 # Make deterministic
 os.environ['TF_DETERMINISTIC_OPS'] = '1'
 tf.random.set_seed(RANDOM_SEED)
+# Set growth ability of memory
+gpus = tf.config.experimental.list_physical_devices(device_type='GPU')
+tf.config.experimental.set_memory_growth(gpus[0], MEMORY_GROWTH)
 
 
 class NeuralEstimator:

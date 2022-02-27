@@ -23,6 +23,9 @@ EPOCHS = 100
 # Default batch size
 BATCH_SIZE = 32
 
+# Allow memory growth
+MEMORY_GROWTH = True
+
 
 # Plotting
 # --------
