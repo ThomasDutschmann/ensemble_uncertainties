@@ -10,6 +10,7 @@ from ensemble_uncertainties.neural_estimators.neural_estimator import (
 
 from ensemble_uncertainties.utils.kernel_functions import tanimoto
 
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 from sklearn.svm import SVC, SVR
 
@@ -25,6 +26,7 @@ from xgboost import XGBClassifier, XGBRegressor
 models = dict()
 models['classification'] = dict()
 models['classification']['rf'] = RandomForestClassifier()
+models['classification']['dt'] = DecisionTreeClassifier()
 models['classification']['svm_rbf'] = SVC(kernel='rbf')
 models['classification']['svm_tanimoto'] = SVC(kernel=tanimoto)
 models['classification']['xgb'] = XGBClassifier(use_label_encoder=False)
@@ -36,6 +38,7 @@ models['classification']['shallow'] = ShallowNeuralClassifier()
 # ----------
 models['regression'] = dict()
 models['regression']['rf'] = RandomForestRegressor()
+models['regression']['dt'] = DecisionTreeRegressor()
 models['regression']['svm_rbf'] = SVR(kernel='rbf')
 models['regression']['svm_tanimoto'] = SVR(kernel=tanimoto)
 models['regression']['xgb'] = XGBRegressor()
