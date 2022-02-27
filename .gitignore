@@ -26,7 +26,7 @@ test_notebooks/
 venv/
 ENV/
 
-# MacOS
+# macOS
 .DS_Store
 
 # VScode
@@ -34,3 +34,6 @@ ENV/
 
 # Results
 test_results/
+
+# Stored images from preliminary experiments
+preliminary_experiments/*plots/
