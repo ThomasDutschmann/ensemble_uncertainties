@@ -36,4 +36,4 @@ ENV/
 test_results/
 
 # Stored images from preliminary experiments
-preliminary_experiments/*plots/
+preliminary_experiments/*/plots/
