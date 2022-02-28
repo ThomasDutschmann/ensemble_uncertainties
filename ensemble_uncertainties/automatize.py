@@ -3,12 +3,11 @@
 running an Evaluator and collecting its results.
 """
 
-from locale import normalize
 import os
 import pickle
 import shutil
 
-from ensemble_uncertainties.constants import N_SPLITS, RANDOM_SEED, N_REPS
+from ensemble_uncertainties.constants import N_REPS, N_SPLITS, RANDOM_SEED
 
 from datetime import datetime
 

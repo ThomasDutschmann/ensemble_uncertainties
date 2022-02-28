@@ -11,7 +11,7 @@ RANDOM_SEED = 0
 N_REPS = 100
 
 # Default number of splits in k-fold
-N_SPLITS = 10
+N_SPLITS = 2
 
 
 # TensorFlow

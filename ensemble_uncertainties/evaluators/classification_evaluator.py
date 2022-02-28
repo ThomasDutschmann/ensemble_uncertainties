@@ -3,7 +3,7 @@
 
 import pandas as pd
 
-from ensemble_uncertainties.constants import N_SPLITS, RANDOM_SEED, N_REPS
+from ensemble_uncertainties.constants import N_REPS, N_SPLITS, RANDOM_SEED
 
 from ensemble_uncertainties.evaluators.evaluator import Evaluator
 

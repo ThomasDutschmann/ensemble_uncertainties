@@ -6,7 +6,7 @@ import pandas as pd
 
 from abc import abstractmethod
 
-from ensemble_uncertainties.constants import N_SPLITS, RANDOM_SEED, N_REPS
+from ensemble_uncertainties.constants import N_REPS, N_SPLITS, RANDOM_SEED
 
 from copy import deepcopy
 
