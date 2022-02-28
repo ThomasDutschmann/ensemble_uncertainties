@@ -52,6 +52,33 @@ def rmses_frac(resids, uncertainties, frac=1.0):
     return oracle_rmses, measure_rmses
 
 
+def auco(oracle_rmses, measure_rmses, normalize=False):
+    """Computes the Area-Under-the-Confidence-Oracle error, see
+    https://doi.org/10.1021/acs.jcim.9b00975 for more details.
+
+    Parameters
+    ----------
+    oracle_rmses : list
+        RMSEs in the ideal case
+    measure_rmses : list
+        RMSEs when using the uncertainty measure to evaluate
+    normalize : bool
+        Whether the 100% RMSE (including all predictions) should
+        be set to 1.0, default: False
+
+    Returns
+    -------
+    float
+        Sum of all differences between oracle_rmses and measure_rmses
+    """
+    orac, meas = oracle_rmses, measure_rmses
+    if normalize:
+        orac = oracle_rmses / oracle_rmses[0]
+        meas = measure_rmses / measure_rmses[0]
+    area = sum([m - o for o, m in zip(orac, meas)])
+    return area
+
+
 def cumulative_accuracy(y, predicted, probabilities, start_frac=.05):
     """Evaluates accumulation efficiency of classification predictions.
 

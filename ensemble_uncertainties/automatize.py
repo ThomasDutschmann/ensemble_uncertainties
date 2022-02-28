@@ -3,11 +3,12 @@
 running an Evaluator and collecting its results.
 """
 
+from locale import normalize
 import os
 import pickle
 import shutil
 
-from ensemble_uncertainties.constants import N_SPLITS, RANDOM_SEED, REPS
+from ensemble_uncertainties.constants import N_SPLITS, RANDOM_SEED, N_REPS
 
 from datetime import datetime
 
@@ -21,6 +22,11 @@ from ensemble_uncertainties.evaluators.regression_evaluator import (
     RegressionEvaluator
 )
 
+from ensemble_uncertainties.utils.ad_assessment import (
+    auco,
+    rmses_frac
+)
+
 from ensemble_uncertainties.utils.plotting import (
     plot_r2,
     plot_confidence,
@@ -30,7 +36,7 @@ from ensemble_uncertainties.utils.plotting import (
 )
 
 
-def run_evaluation(model, task, X, y, verbose=True, repetitions=REPS,
+def run_evaluation(model, task, X, y, verbose=True, repetitions=N_REPS,
         n_splits=N_SPLITS, seed=RANDOM_SEED, scale=True, path=None, args=None,
         follow_up=None):
     """Runs evaluation with an EnsembleADEvaluator for given settings.
@@ -216,6 +222,27 @@ def results_tables_to_file(evaluator, path):
     evaluator.test_ensemble_preds.to_csv(f'{epath}test.csv', sep=';')
 
 
+def compute_aucos(evaluator):
+    """Computes raw and normalized AUCO.
+    
+    Parameters
+    ----------
+    evaluator : Evaluator
+        Performed Evaluator-object
+        
+    Returns
+    -------
+    float, float
+        AUCO, normalized AUCO
+    """
+    resids = evaluator.test_ensemble_preds['resid']
+    uncertainties = evaluator.test_ensemble_preds['sdep']
+    oracle_rmses, measure_rmses = rmses_frac(resids, uncertainties)
+    area = auco(oracle_rmses, measure_rmses)
+    normalized_area = auco(oracle_rmses, measure_rmses, normalize=True)
+    return area, normalized_area
+
+
 def write_report(args, evaluator):
     """Writes informative summary file.
 
@@ -255,4 +282,8 @@ def write_report(args, evaluator):
         f.write('-------\n')
         f.write(f'Train {metric_name}:       {train_quality:.3f}\n')
         f.write(f'Test {metric_name}:        {test_quality:.3f}\n')
+        if args.task == 'regression':
+            area, normalized_area = compute_aucos(evaluator)
+            f.write(f'AUCO:            {area:.3f}\n')
+            f.write(f'Normalized AUCO: {normalized_area:.3f}\n')
         f.write(f'Overall runtime: {formatted_runtime}\n')
