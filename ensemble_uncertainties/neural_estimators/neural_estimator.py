@@ -23,9 +23,10 @@ logging.getLogger('tensorflow').setLevel(logging.FATAL)
 # Make deterministic
 os.environ['TF_DETERMINISTIC_OPS'] = '1'
 tf.random.set_seed(RANDOM_SEED)
-# Set growth ability of memory
+# Set growth ability of GPU memory (if available)
 gpus = tf.config.experimental.list_physical_devices(device_type='GPU')
-tf.config.experimental.set_memory_growth(gpus[0], MEMORY_GROWTH)
+if len(gpus) > 0:
+    tf.config.experimental.set_memory_growth(gpus[0], MEMORY_GROWTH)
 
 
 class NeuralEstimator:
