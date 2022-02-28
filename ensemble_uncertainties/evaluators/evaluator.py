@@ -6,7 +6,7 @@ import pandas as pd
 
 from abc import abstractmethod
 
-from ensemble_uncertainties.constants import N_SPLITS, RANDOM_SEED, REPS
+from ensemble_uncertainties.constants import N_SPLITS, RANDOM_SEED, N_REPS
 
 from copy import deepcopy
 
@@ -32,7 +32,7 @@ class Evaluator:
     For parameters, please see help(Evaluator.__init__).
     """
 
-    def __init__(self, model, verbose=True, repetitions=REPS,
+    def __init__(self, model, verbose=True, repetitions=N_REPS,
             n_splits=N_SPLITS, seed=RANDOM_SEED, scale=True):
         """Initializer, sets constants and initializes empty tables.
         

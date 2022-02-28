@@ -36,7 +36,10 @@ def format_time_elapsed(time_elapsed):
         display += f'{int(minutes)} Minute(s). '
     if int(seconds) > 0:
         display += f'{int(seconds)} Second(s). '
-    return display
+    if display:
+        return display
+    else:
+        return '< 1 Second.'
 
 
 def make_columns(repetitions, n_splits):

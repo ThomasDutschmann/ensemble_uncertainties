@@ -3,7 +3,7 @@
 
 import pandas as pd
 
-from ensemble_uncertainties.constants import N_SPLITS, RANDOM_SEED, REPS
+from ensemble_uncertainties.constants import N_SPLITS, RANDOM_SEED, N_REPS
 
 from ensemble_uncertainties.evaluators.evaluator import Evaluator
 
@@ -15,7 +15,7 @@ class RegressionEvaluator(Evaluator):
 
     __doc__ += Evaluator.__doc__
 
-    def __init__(self, model, verbose=True, repetitions=REPS,
+    def __init__(self, model, verbose=True, repetitions=N_REPS,
             n_splits=N_SPLITS, seed=RANDOM_SEED, scale=True):
         super().__init__(
             model=model,

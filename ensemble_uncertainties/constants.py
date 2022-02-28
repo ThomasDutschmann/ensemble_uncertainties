@@ -8,7 +8,7 @@
 RANDOM_SEED = 0
 
 # Default number of repetitions
-REPS = 100
+N_REPS = 100
 
 # Default number of splits in k-fold
 N_SPLITS = 10

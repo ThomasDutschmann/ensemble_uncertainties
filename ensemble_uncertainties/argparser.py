@@ -3,7 +3,7 @@
 
 import argparse
 
-from ensemble_uncertainties.constants import N_SPLITS, RANDOM_SEED, REPS
+from ensemble_uncertainties.constants import N_SPLITS, RANDOM_SEED, N_REPS
 
 
 parser = argparse.ArgumentParser(
@@ -16,8 +16,8 @@ parser.add_argument(
     '--repetitions',
     dest='repetitions',
     type=int,
-    help=f'number of repetitions, default: {REPS}',
-    default=REPS
+    help=f'number of repetitions, default: {N_REPS}',
+    default=N_REPS
 )
 
 parser.add_argument(
