@@ -103,3 +103,11 @@ parser.add_argument(
     help='if set, variable scaling is deactivated (for Tanimoto kernel)',
     action='store_true',
 )
+
+parser.add_argument(
+    '-a',
+    '--store_all',
+    dest='store_all',
+    help='if set, models and data transformers will also be stored',
+    action='store_true',
+)

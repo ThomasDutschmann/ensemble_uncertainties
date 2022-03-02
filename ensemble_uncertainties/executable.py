@@ -42,6 +42,7 @@ def main():
         seed=args.seed,
         scale=scale,
         path=args.output_path,
+        store_all=args.store_all,
         args=args
     )
 

@@ -36,8 +36,8 @@ from ensemble_uncertainties.utils.plotting import (
 
 
 def run_evaluation(model, task, X, y, verbose=True, repetitions=N_REPS,
-        n_splits=N_SPLITS, seed=RANDOM_SEED, scale=True, path=None, args=None,
-        follow_up=None):
+        n_splits=N_SPLITS, seed=RANDOM_SEED, scale=True, path=None, 
+        store_all=False, args=None, follow_up=None):
     """Runs evaluation with an EnsembleADEvaluator for given settings.
 
     Parameters
@@ -65,6 +65,8 @@ def run_evaluation(model, task, X, y, verbose=True, repetitions=N_REPS,
         Whether standardize variables, default: True
     path : str
         Path to the directory to store the results in, default: None
+    store_all : bool
+        If True, models and data transformers are stored too, default: False
     args : argparse.Namespace
         Parsed arguments from an argument parser.
         Useful for logging. Default: None.
@@ -96,10 +98,11 @@ def run_evaluation(model, task, X, y, verbose=True, repetitions=N_REPS,
         if not path.endswith('/'):
             path += '/'
         plots_to_file(evaluator, task, path)
-        transformers_to_file(evaluator, path)
-        models_to_file(evaluator, path)
         results_tables_to_file(evaluator, path)
         write_report(args, evaluator)
+        if store_all:
+            transformers_to_file(evaluator, path)
+            models_to_file(evaluator, path)
     if follow_up:
         follow_up(evaluator)
 
