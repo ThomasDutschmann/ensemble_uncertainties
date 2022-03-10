@@ -3,7 +3,12 @@
 
 import pandas as pd
 
-from ensemble_uncertainties.constants import N_REPS, N_SPLITS, RANDOM_SEED
+from ensemble_uncertainties.constants import (
+    N_REPS,
+    N_SPLITS,
+    RANDOM_SEED,
+    V_THRESHOLD
+)
 
 from ensemble_uncertainties.evaluators.evaluator import Evaluator
 
@@ -16,14 +21,16 @@ class ClassificationEvaluator(Evaluator):
     __doc__ += Evaluator.__doc__
 
     def __init__(self, model, verbose=True, repetitions=N_REPS,
-            n_splits=N_SPLITS, seed=RANDOM_SEED, scale=True):
+            n_splits=N_SPLITS, seed=RANDOM_SEED, scale=True,
+            v_threshold=V_THRESHOLD):
         super().__init__(
             model=model,
             verbose=verbose,
             repetitions=repetitions,
             n_splits=n_splits,
             seed=seed,
-            scale=scale
+            scale=scale,
+            v_threshold=v_threshold
         )
         self.task = 'classification'
         self.metric = accuracy_score

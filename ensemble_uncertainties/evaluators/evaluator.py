@@ -6,7 +6,12 @@ import pandas as pd
 
 from abc import abstractmethod
 
-from ensemble_uncertainties.constants import N_REPS, N_SPLITS, RANDOM_SEED
+from ensemble_uncertainties.constants import (
+    N_REPS,
+    N_SPLITS,
+    RANDOM_SEED,
+    V_THRESHOLD
+)
 
 from copy import deepcopy
 
@@ -17,6 +22,7 @@ from ensemble_uncertainties.evaluators.evaluator_support import (
     make_columns,
     make_array,
     print_summary,
+    random_int32,
     use_tqdm
 )
 
@@ -33,7 +39,8 @@ class Evaluator:
     """
 
     def __init__(self, model, verbose=True, repetitions=N_REPS,
-            n_splits=N_SPLITS, seed=RANDOM_SEED, scale=True):
+            n_splits=N_SPLITS, seed=RANDOM_SEED, scale=True,
+            v_threshold=V_THRESHOLD):
         """Initializer, sets constants and initializes empty tables.
         
         Parameters
@@ -51,6 +58,9 @@ class Evaluator:
             Seed to use for splitting, default: RANDOM_SEED
         scale : bool
             Whether standardize variables, default: True
+        v_threshold : float
+            The variance threshold to apply after normalization, variables
+            with a variance below will be removed, default: V_THRESHOLD
         """
         # Set given parameters
         self.model = model
@@ -59,6 +69,7 @@ class Evaluator:
         self.n_splits = n_splits
         self.seed = seed
         self.scale = scale
+        self.v_threshold = v_threshold
         # Initialize list- and table-like members
         # to conveniently append data to them
         self.train_preds = pd.DataFrame()
@@ -133,7 +144,7 @@ class Evaluator:
         """
         # Define splitting scheme
         kfold = KFold(n_splits=self.n_splits,
-            random_state=rep_index, shuffle=True)
+            random_state=random_int32(), shuffle=True)
         splits = kfold.split(self.X)
         split_iter = use_tqdm(list(enumerate(splits)), self.verbose)
         # Run all folds
@@ -169,21 +180,28 @@ class Evaluator:
         y_tr : DataFrame
             Train outputs
         """
-        # Define variance threshold filter and scaler
-        vt = VarianceThreshold().fit(X_tr)
+        # Drop variables below variance threshold (after normalization)
+        X_tre_norm = pd.DataFrame(
+            X_tr / X_tr.mean(),
+            index=X_tr.index,
+            columns=X_tr.columns
+        ).fillna(1.0)
+        vt = VarianceThreshold(threshold=self.v_threshold).fit(X_tre_norm)
         # Do not perform scaling if scale is False
         if self.scale:
             pre_scaler = StandardScaler()
         else:
             pre_scaler = StandardScaler(with_mean=False, with_std=False)
-        scaler = pre_scaler.fit(vt.transform(X_tr))
+        # Define variance threshold filter after scaling
+        scaler = pre_scaler.fit(X_tr)
+        # Store as member
         self.vt_filters[rep_index][split_index] = vt
         self.scalers[rep_index][split_index] = scaler
         # Variance-filter and scale train inputs
-        X_train = pd.DataFrame(scaler.transform(vt.transform(X_tr)),
+        X_train = pd.DataFrame(vt.transform(scaler.transform(X_tr)),
             index=X_tr.index, columns=X_tr.columns[vt.get_support()])
         # Variance-filter and scale test inputs
-        X_test = pd.DataFrame(scaler.transform(vt.transform(X_te)),
+        X_test = pd.DataFrame(vt.transform(scaler.transform(X_te)),
             index=X_te.index, columns=X_te.columns[vt.get_support()])
         # Construct model (fit)
         # "We clone the estimator to make sure that all the folds are

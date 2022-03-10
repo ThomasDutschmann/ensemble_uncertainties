@@ -70,6 +70,11 @@ def make_array(dim):
     return np.empty(dim, dtype=object)
 
 
+def random_int32():
+    """Returns a random 0+ 32-bit integer."""
+    return np.random.randint(2**32 - 1)
+
+
 def print_summary(overall_run_time, metric_name, train_quality, test_quality):
     """Show train performance, test performance, and over all runtime.
 

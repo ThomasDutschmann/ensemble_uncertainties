@@ -13,6 +13,9 @@ N_REPS = 100
 # Default number of splits in k-fold
 N_SPLITS = 2
 
+# Default variance threshold (after normalization)
+V_THRESHOLD = 0.005
+
 
 # TensorFlow
 # ----------

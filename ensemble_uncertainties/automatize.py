@@ -7,7 +7,12 @@ import os
 import pickle
 import shutil
 
-from ensemble_uncertainties.constants import N_REPS, N_SPLITS, RANDOM_SEED
+from ensemble_uncertainties.constants import (
+    N_REPS,
+    N_SPLITS,
+    RANDOM_SEED,
+    V_THRESHOLD
+)
 
 from datetime import datetime
 
@@ -36,8 +41,9 @@ from ensemble_uncertainties.utils.plotting import (
 
 
 def run_evaluation(model, task, X, y, verbose=True, repetitions=N_REPS,
-        n_splits=N_SPLITS, seed=RANDOM_SEED, scale=True, path=None, 
-        store_all=False, args=None, follow_up=None):
+        n_splits=N_SPLITS, seed=RANDOM_SEED, scale=True, 
+        v_threshold=V_THRESHOLD, path=None, store_all=False, args=None,
+        follow_up=None):
     """Runs evaluation with an EnsembleADEvaluator for given settings.
 
     Parameters
@@ -63,6 +69,9 @@ def run_evaluation(model, task, X, y, verbose=True, repetitions=N_REPS,
         Seed to use for splitting, default: constants.RANDOM_SEED
     scale : bool
         Whether standardize variables, default: True
+    v_threshold : float
+        The variance threshold to apply after normalization, variables
+        with a variance below will be removed, default: V_THRESHOLD
     path : str
         Path to the directory to store the results in, default: None
     store_all : bool
@@ -88,7 +97,8 @@ def run_evaluation(model, task, X, y, verbose=True, repetitions=N_REPS,
         repetitions=repetitions,
         n_splits=n_splits,
         seed=seed,
-        scale=scale
+        scale=scale,
+        v_threshold=v_threshold
     )
     # Run evaluation
     evaluator.perform(X, y)

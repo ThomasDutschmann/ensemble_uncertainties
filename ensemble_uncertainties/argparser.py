@@ -3,7 +3,12 @@
 
 import argparse
 
-from ensemble_uncertainties.constants import N_REPS, N_SPLITS, RANDOM_SEED
+from ensemble_uncertainties.constants import (
+    N_REPS,
+    N_SPLITS, 
+    RANDOM_SEED,
+    V_THRESHOLD
+)
 
 
 parser = argparse.ArgumentParser(
@@ -64,7 +69,7 @@ parser.add_argument(
     '--model',
     dest='model_name',
     type=str,
-    help='which model to use (RF, SVM, DL, XGB or user-defined)',
+    help='which model to use, e.g. "svm_rbf" or "dl"',
     required=True,
     default=None
 )
@@ -100,8 +105,17 @@ parser.add_argument(
     '-d',
     '--deactivate_scaling',
     dest='deactivate_scaling',
-    help='if set, variable scaling is deactivated (for Tanimoto kernel)',
+    help='if set, variable scaling is deactivated (for binary inputs)',
     action='store_true',
+)
+
+parser.add_argument(
+    '-e',
+    '--variance_threshold',
+    dest='v_threshold',
+    type=float,
+    help=f'variance threshold (after normalization), default: {V_THRESHOLD}',
+    default=V_THRESHOLD
 )
 
 parser.add_argument(

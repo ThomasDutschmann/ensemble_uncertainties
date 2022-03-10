@@ -31,6 +31,7 @@ def main():
     model = parse_model(args.task, args.model_name)
     X, y = load_data(args.X_path, args.y_path)
     scale = not args.deactivate_scaling
+    v_threshold = args.v_threshold
     run_evaluation(
         model=model,
         task=args.task,
@@ -41,6 +42,7 @@ def main():
         n_splits=args.n_splits, 
         seed=args.seed,
         scale=scale,
+        v_threshold=v_threshold,
         path=args.output_path,
         store_all=args.store_all,
         args=args
