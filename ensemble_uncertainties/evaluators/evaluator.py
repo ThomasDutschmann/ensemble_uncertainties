@@ -198,19 +198,23 @@ class Evaluator:
         self.vt_filters[rep_index][split_index] = vt
         self.scalers[rep_index][split_index] = scaler
         # Variance-filter and scale train inputs
-        X_train = pd.DataFrame(vt.transform(scaler.transform(X_tr)),
+        X_tr_sc = pd.DataFrame(scaler.transform(X_tr),
+            index=X_tr.index, columns=X_tr.columns)
+        X_tr_sc_filt = pd.DataFrame(X_tr_sc,
             index=X_tr.index, columns=X_tr.columns[vt.get_support()])
         # Variance-filter and scale test inputs
-        X_test = pd.DataFrame(vt.transform(scaler.transform(X_te)),
+        X_te_sc = pd.DataFrame(scaler.transform(X_te),
+            index=X_te.index, columns=X_te.columns)
+        X_te_sc_filt = pd.DataFrame(X_te_sc,
             index=X_te.index, columns=X_te.columns[vt.get_support()])
         # Construct model (fit)
         # "We clone the estimator to make sure that all the folds are
         # independent, and that it is pickle-able" -- sklearn
         model = deepcopy(self.model)
-        model.fit(X_train, y_tr.values.ravel())
+        model.fit(X_tr_sc_filt, y_tr.values.ravel())
         self.models[rep_index][split_index] = model
         # Predict
-        self.compute_predictions(model, X_train, X_test)
+        self.compute_predictions(model, X_tr_sc_filt, X_te_sc_filt)
 
     def compute_predictions(self, model, X_train, X_test):
         """Predicts train and test outputs, stores them in DataFrames.
