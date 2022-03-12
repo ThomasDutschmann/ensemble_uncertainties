@@ -29,7 +29,7 @@ def rmses_frac(resids, uncertainties, frac=1.0):
     # Define up until which index predictions should be removed
     threshold = int(frac * len(resids))
     if frac == 1.0:
-        threshold = len(resids) #- 1
+        threshold = len(resids)
     # Sort by residual
     oracle = list(sorted(np.absolute(resids.values)))[::-1]
     # Sort by uncertainty
@@ -77,6 +77,30 @@ def auco(oracle_rmses, measure_rmses, normalize=False):
         meas = measure_rmses / measure_rmses[0]
     area = sum([m - o for o, m in zip(orac, meas)])
     return area
+
+
+def decreasing_coeff(measure_rmses):
+    """Computes the decreasing coefficient (monotonicity), see
+    https://doi.org/10.1021/acs.jcim.9b00975 for more details.
+    
+    Parameters
+    ----------
+    measure_rmses : list
+        RMSEs when using the uncertainty measure to evaluate
+
+    Returns
+    -------
+    float
+        The decreasing coefficient
+    """
+    # Implement equation from publication
+    q = len(measure_rmses)
+    n_decreasing = 0
+    for i in range(q-1):
+        if measure_rmses[i] >= measure_rmses[i+1]:
+            n_decreasing += 1
+    coeff = n_decreasing / (q-1)
+    return coeff
 
 
 def cumulative_accuracy(y, predicted, probabilities, start_frac=.05):
