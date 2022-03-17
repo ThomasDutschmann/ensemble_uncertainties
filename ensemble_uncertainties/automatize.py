@@ -147,13 +147,24 @@ def plots_to_file(evaluator, task, path):
     """
     plots_path = f'{path}plots/'
     make_folder(plots_path)
+    y = evaluator.y['y']
     if task == 'classification':
-        plot_roc(evaluator, path=plots_path)
-        plot_cumulative_accuracy(evaluator, path=plots_path)
+        # Extract
+        te_preds = evaluator.test_ensemble_preds['predicted']
+        te_probs = evaluator.test_ensemble_preds['probA']
+        # Plot
+        plot_roc(y, te_probs, path=plots_path)
+        plot_cumulative_accuracy(y, te_preds, te_probs, path=plots_path)
     elif task == 'regression':
-        plot_r2(evaluator, path=plots_path)
-        plot_confidence(evaluator, path=plots_path)
-        plot_scatter(evaluator, path=plots_path)
+        # Extract
+        tr_preds = evaluator.train_ensemble_preds['predicted']
+        te_preds = evaluator.test_ensemble_preds['predicted']
+        resids = evaluator.test_ensemble_preds['resid'].abs()
+        uncertainties = evaluator.test_ensemble_preds['sdep']
+        # Plot
+        plot_r2(y, tr_preds, te_preds, path=plots_path)
+        plot_confidence(resids, uncertainties, path=plots_path)
+        plot_scatter(resids, uncertainties, path=plots_path)
 
 
 def transformers_to_file(evaluator, path):

@@ -16,8 +16,8 @@ def rmses_frac(resids, uncertainties, frac=1.0):
     ----------
     resids : Series
         Residuals
-    uncertainties : DataFrame
-        Frame with uncertainty measure values
+    uncertainties : Series
+        Uncertainty measure values
     frac : float [0, 1]
         Fraction of predictions to remove, default: 1.0
 

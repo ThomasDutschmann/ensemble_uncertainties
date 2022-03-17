@@ -13,33 +13,35 @@ from ensemble_uncertainties.utils.ad_assessment import (
 
 from ensemble_uncertainties.constants import DPI, DEF_COLOR
 
-from sklearn.metrics import roc_curve
+from sklearn.metrics import r2_score, roc_curve
 
 
 # Settings
 mpl.rcParams['figure.dpi'] = DPI
 
 
-def plot_r2(evaluator, color_tr='C0', color_te='C1', path=''):
+def plot_r2(y, tr_preds, te_preds, path='', show=False):
     """Plots observed vs. predicted scatter plot.
 
     Parameters
     ----------
-    evaluator : EnsembleADEvaluator
-        Applied evaluator
-    color_tr : str
-        Name of the color for train predictions, default: 'C0'
-    color_te : str
-        Name of the color for test predictions, default: 'C1'
+    y : Series
+        True values
+    tr_preds : Series
+        Train predictions
+    te_preds : Series
+        Test predictions
     path : str
         Path of the file to store the plot, default: '' (no storing)
+    show : bool
+        If True, plt.show() will be called, default: False
     """
     # Get data from evaluator
-    y = evaluator.y['y']
-    tr_preds = evaluator.train_ensemble_preds['predicted']
-    te_preds = evaluator.test_ensemble_preds['predicted']
-    tr_r2 = evaluator.train_ensemble_quality
-    te_r2 = evaluator.test_ensemble_quality
+    #y = evaluator.y['y']
+    #tr_preds = evaluator.train_ensemble_preds['predicted']
+    #te_preds = evaluator.test_ensemble_preds['predicted']
+    tr_r2 = r2_score(y, tr_preds)
+    te_r2 = r2_score(y, te_preds)
     # Get corner values of the outputs/predictions
     smallest = min(min(y), min(te_preds.values), min(tr_preds.values))
     biggest = max(min(y), max(te_preds.values), max(tr_preds.values))
@@ -47,13 +49,13 @@ def plot_r2(evaluator, color_tr='C0', color_te='C1', path=''):
     plt.figure(figsize=(5, 5))
     plt.grid(zorder=1000)
     plt.plot(y, tr_preds, 'o', zorder=101, markersize=4, label=None,
-        color=color_tr, mfc='none', alpha=.7)
+        color='C0', mfc='none', alpha=.7)
     plt.plot(y, te_preds, 'o', zorder=100, markersize=4, label=None,
-        color=color_te, mfc='none', alpha=.7)
+        color='C1', mfc='none', alpha=.7)
     plt.scatter([], [], label=f'Train, $R^2$: {tr_r2:.3f}',
-        color=color_tr, facecolor='none')
+        color='C0', facecolor='none')
     plt.scatter([], [], label=f'Test,  $R^2$: {te_r2:.3f}',
-        color=color_te, facecolor='none')
+        color='C1', facecolor='none')
     plt.plot([smallest-.2, biggest+.2], [smallest-.2, biggest+.2], zorder=100,
         color='k', label='$\hat{y}$ = $y$')
     plt.xlim(smallest-.2, biggest+.2)
@@ -63,30 +65,32 @@ def plot_r2(evaluator, color_tr='C0', color_te='C1', path=''):
     plt.legend()
     if path:
         plt.savefig(f'{path}r2.png', bbox_inches='tight', pad_inches=0.01)
+    if show:
+        plt.show()
 
 
-def plot_confidence(evaluator, frac=1.0, text=None, path=''):
+def plot_confidence(resids, uncertainties,
+        frac=1.0, text=None, path='', show=False):
     """Plots confidence curve.
 
     Parameters
     ----------
-    evaluator : EnsembleADEvaluator
-        Applied evaluator
+    resids : Series
+        Residuals
+    uncertainties : Series
+        Uncertainty measure values
     frac : float
         The fraction of covered outputs ([0.0, 1.0]), default: .5
     text : str
         Text to put in the plot, default: None
     path : str
         Path of the file to store the plot, default: '' (no storing)
-
-    Returns
-    -------
-    float
-        Area between the ideal curve and the measure curve
+    show : bool
+        If True, plt.show() will be called, default: False
     """
     # Get data from evaluator
-    resids = evaluator.test_ensemble_preds['resid']
-    uncertainties = evaluator.test_ensemble_preds['sdep']
+    #resids = evaluator.test_ensemble_preds['resid']
+    #uncertainties = evaluator.test_ensemble_preds['sdep']
     oracle_rmses, measure_rmses = rmses_frac(resids, uncertainties, frac=frac)
     x_space = np.linspace(0.0, 100.0*frac, len(oracle_rmses))
     plt.figure(figsize=(5, 5))
@@ -103,21 +107,27 @@ def plot_confidence(evaluator, frac=1.0, text=None, path=''):
     if path:
         plt.savefig(f'{path}confidence.png', bbox_inches='tight',
             pad_inches=0.01)
+    if show:
+        plt.show()
 
 
-def plot_scatter(evaluator, path=''):
+def plot_scatter(resids, uncertainties, path='', show=False):
     """Plots uncertainties vs. residuals scatter plot.
 
     Parameters
     ----------
-    evaluator : EnsembleADEvaluator
-        Applied evaluator
+    resids : Series
+        Residuals
+    uncertainties : Series
+        Uncertainty measure values
     path : str
         Path of the file to store the plot, default: '' (no storing)
+    show : bool
+        If True, plt.show() will be called, default: False
     """
     # Get data from evaluator
-    resids = evaluator.test_ensemble_preds['resid'].abs()
-    uncertainties = evaluator.test_ensemble_preds['sdep']
+    #resids = evaluator.test_ensemble_preds['resid'].abs()
+    #uncertainties = evaluator.test_ensemble_preds['sdep']
     plt.figure(figsize=(5, 5))
     plt.grid(zorder=1000)
     plt.plot(uncertainties, resids, 'o', zorder=101, markersize=4,
@@ -127,21 +137,27 @@ def plot_scatter(evaluator, path=''):
     if path:
         plt.savefig(f'{path}scatter.png', bbox_inches='tight',
             pad_inches=0.0)
+    if show:
+        plt.show()
 
 
-def plot_roc(evaluator, path=''):
+def plot_roc(y, te_probs, path='', show=False):
     """Plots ROC curve.
 
     Parameters
     ----------
-    evaluator : EnsembleADEvaluator
-        Applied evaluator
+    y : Series
+        True values
+    te_probs : Series
+        Posterior probabilities of the test predictions
     path : str
         Path of the file to store the plot, default: '' (no storing)
+    show : bool
+        If True, plt.show() will be called, default: False
     """
     # Get data from evaluator
-    y = evaluator.y['y']
-    te_probs = evaluator.test_ensemble_preds['probA']
+    #y = evaluator.y['y']
+    #te_probs = evaluator.test_ensemble_preds['probA']
     fpr, tpr, _ = roc_curve(y, te_probs)
     # Plot
     plt.figure(figsize=(5, 5))
@@ -155,24 +171,33 @@ def plot_roc(evaluator, path=''):
     if path:
         plt.savefig(f'{path}roc.png', bbox_inches='tight',
             pad_inches=0.0)
+    if show:
+        plt.show()
 
 
-def plot_cumulative_accuracy(evaluator, start_frac=.05, path=''):
+def plot_cumulative_accuracy(y, te_preds, te_probs,
+        start_frac=.05, path='', show=False):
     """Plots cumulative accuracy plot.
 
     Parameters
     ----------
-    evaluator : EnsembleADEvaluator
-        Applied evaluator
+    y : Series
+        True values
+    te_preds : Series
+        Test predictions
+    te_probs : Series
+        Posterior probabilities of the test predictions
     start_frac : float [0, 1]
         Fraction of predictions to start with, default: 0.05
     path : str
         Path of the file to store the plot, default: '' (no storing)
+    show : bool
+        If True, plt.show() will be called, default: False
     """
     # Get data from evaluator
-    y = evaluator.y['y']
-    te_preds = evaluator.test_ensemble_preds['predicted']
-    te_probs = evaluator.test_ensemble_preds['probA']
+    #y = evaluator.y['y']
+    #te_preds = evaluator.test_ensemble_preds['predicted']
+    #te_probs = evaluator.test_ensemble_preds['probA']
     accuracies = cumulative_accuracy(y, te_preds, te_probs,
         start_frac=start_frac)
     x_space = np.linspace(100*start_frac, 100.0, len(accuracies))
@@ -185,3 +210,5 @@ def plot_cumulative_accuracy(evaluator, start_frac=.05, path=''):
     if path:
         plt.savefig(f'{path}cumulative.png', bbox_inches='tight',
             pad_inches=0.01)
+    if show:
+        plt.show()
