@@ -85,6 +85,8 @@ class Evaluator:
         """Sets seed, initializes empty matrices and starts timer."""
         # Set seed
         np.random.seed(self.seed)
+        # Set random states for each splitting in each repetition
+        self.random_states = random_int32(self.repetitions, seed=self.seed)
         # Allocate places for all model-specific transformers
         # so that we can acces them with row and column indexes
         self.vt_filters = make_array((self.repetitions, self.n_splits))
@@ -144,7 +146,7 @@ class Evaluator:
         """
         # Define splitting scheme
         kfold = KFold(n_splits=self.n_splits,
-            random_state=random_int32(), shuffle=True)
+            random_state=self.random_states[rep_index], shuffle=True)
         splits = kfold.split(self.X)
         split_iter = use_tqdm(list(enumerate(splits)), self.verbose)
         # Run all folds

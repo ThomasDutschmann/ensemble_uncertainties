@@ -3,7 +3,11 @@
 
 import numpy as np
 
+from numpy.random import default_rng
+
 from tqdm import tqdm
+
+from ensemble_uncertainties.constants import RANDOM_SEED
 
 
 def use_tqdm(iterable, use):
@@ -70,9 +74,11 @@ def make_array(dim):
     return np.empty(dim, dtype=object)
 
 
-def random_int32():
-    """Returns a random 0+ 32-bit integer."""
-    return np.random.randint(2**32 - 1)
+def random_int32(size, seed=RANDOM_SEED):
+    """Returns a <size>-long array of unique random 0+ 32-bit integers."""
+    generator = default_rng(seed=seed)
+    ints = generator.choice(2**32-1, size=size, replace=False)
+    return ints
 
 
 def print_summary(overall_run_time, metric_name, train_quality, test_quality):
