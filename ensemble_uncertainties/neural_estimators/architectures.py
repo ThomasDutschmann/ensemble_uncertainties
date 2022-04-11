@@ -72,7 +72,7 @@ def deep_architecture_mc_dropout(dropout_rate=0.2):
             
     Parameters
     ----------
-    dropout_rate : float \n [0, 1]
+    dropout_rate : float \in [0, 1]
         Fraction of dropped out weights, default: 0.2
                 
     Returns
