@@ -36,10 +36,7 @@ def plot_r2(y, tr_preds, te_preds, path='', show=False):
     show : bool
         If True, plt.show() will be called, default: False
     """
-    # Get data from evaluator
-    #y = evaluator.y['y']
-    #tr_preds = evaluator.train_ensemble_preds['predicted']
-    #te_preds = evaluator.test_ensemble_preds['predicted']
+    # Compute scores
     tr_r2 = r2_score(y, tr_preds)
     te_r2 = r2_score(y, te_preds)
     # Get corner values of the outputs/predictions
@@ -88,9 +85,7 @@ def plot_confidence(resids, uncertainties,
     show : bool
         If True, plt.show() will be called, default: False
     """
-    # Get data from evaluator
-    #resids = evaluator.test_ensemble_preds['resid']
-    #uncertainties = evaluator.test_ensemble_preds['sdep']
+    # Get data
     oracle_rmses, measure_rmses = rmses_frac(resids, uncertainties, frac=frac)
     x_space = np.linspace(0.0, 100.0*frac, len(oracle_rmses))
     plt.figure(figsize=(5, 5))
@@ -125,9 +120,6 @@ def plot_scatter(resids, uncertainties, path='', show=False):
     show : bool
         If True, plt.show() will be called, default: False
     """
-    # Get data from evaluator
-    #resids = evaluator.test_ensemble_preds['resid'].abs()
-    #uncertainties = evaluator.test_ensemble_preds['sdep']
     plt.figure(figsize=(5, 5))
     plt.grid(zorder=1000)
     plt.plot(uncertainties, resids, 'o', zorder=101, markersize=4,
@@ -155,9 +147,7 @@ def plot_roc(y, te_probs, path='', show=False):
     show : bool
         If True, plt.show() will be called, default: False
     """
-    # Get data from evaluator
-    #y = evaluator.y['y']
-    #te_probs = evaluator.test_ensemble_preds['probA']
+    # Compute ROC curve
     fpr, tpr, _ = roc_curve(y, te_probs)
     # Plot
     plt.figure(figsize=(5, 5))
@@ -194,10 +184,7 @@ def plot_cumulative_accuracy(y, te_preds, te_probs,
     show : bool
         If True, plt.show() will be called, default: False
     """
-    # Get data from evaluator
-    #y = evaluator.y['y']
-    #te_preds = evaluator.test_ensemble_preds['predicted']
-    #te_probs = evaluator.test_ensemble_preds['probA']
+    # Get accuracies
     accuracies = cumulative_accuracy(y, te_preds, te_probs,
         start_frac=start_frac)
     x_space = np.linspace(100*start_frac, 100.0, len(accuracies))
