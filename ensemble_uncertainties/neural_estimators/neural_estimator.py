@@ -4,10 +4,16 @@
 import logging
 import os
 
+import numpy as np
+
+import pandas as pd
+
 import tensorflow as tf
 
 from ensemble_uncertainties.neural_estimators.architectures import (
     deep_architecture,
+    deep_architecture_dropout,
+    deep_architecture_mc_dropout,
     shallow_architecture
 )
 
@@ -167,3 +173,63 @@ class ShallowNeuralRegressor(NeuralEstimator):
             epochs=epochs,
             batch_size=batch_size
         )
+
+
+class DeepDropoutRegressor(NeuralEstimator):
+    """Regression-specific extension with dropout, based on:"""
+
+    __doc__ += NeuralEstimator.__doc__
+
+    def __init__(self, epochs=1000, batch_size=BATCH_SIZE, dropout_rate=0.2):
+        super().__init__(
+            loss='mse',
+            metric='mean_squared_error',
+            architecture=deep_architecture_dropout(
+                dropout_rate=dropout_rate
+            ),
+            # Dropout requires more epochs!
+            epochs=epochs,
+            batch_size=batch_size
+        )
+
+
+class DeepMCDropoutRegressor(NeuralEstimator):
+    """Regression-specific extension for MC dropout, based on:"""
+
+    __doc__ += NeuralEstimator.__doc__
+
+    def __init__(self, epochs=1000, batch_size=BATCH_SIZE, dropout_rate=0.2,
+            n_pred=100):
+        super().__init__(
+            loss='mse',
+            metric='mean_squared_error',
+            architecture=deep_architecture_mc_dropout(
+                dropout_rate=dropout_rate
+            ),
+            # Dropout requires more epochs!
+            epochs=epochs,
+            batch_size=batch_size
+        )
+        self.n_pred = n_pred
+
+
+    def mc_predict(self, X):
+        """Predicts with MC dropout, averages single per-object
+        predictions and takes their standard deviation as UQ estimator.
+        
+        Parameters
+        ----------
+        X : DataFrame
+            Test set to predict
+            
+        Returns
+        -------
+        np.array, np.array
+            Predictions, uncertainties
+        """
+        p_range = range(self.n_pred)
+        predictions = np.array([self.model.predict(X) for _ in p_range])
+        predictions_vals = predictions[:, :, 0]
+        means = predictions_vals.mean(axis=0)
+        sdevs = predictions_vals.std(axis=0)
+        return means, sdevs

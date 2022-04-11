@@ -4,6 +4,8 @@
 from ensemble_uncertainties.neural_estimators.neural_estimator import (
     DeepNeuralClassifier,
     DeepNeuralRegressor,
+    DeepDropoutRegressor,
+    DeepMCDropoutRegressor,
     ShallowNeuralClassifier,
     ShallowNeuralRegressor
 )
@@ -44,6 +46,8 @@ models['regression']['svm_tanimoto'] = SVR(kernel=tanimoto)
 models['regression']['xgb'] = XGBRegressor()
 models['regression']['deep'] = DeepNeuralRegressor()
 models['regression']['shallow'] = ShallowNeuralRegressor()
+models['regression']['dropout'] = DeepDropoutRegressor()
+models['regression']['mc_dropout'] = DeepMCDropoutRegressor()
 
 
 # Add your custom model like so:
