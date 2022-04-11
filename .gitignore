@@ -17,8 +17,9 @@ eggs/
 # Jupyter notebooks for testing
 test_notebooks/
 
-# Old notebooks from preliminary experiments
+# Old or hidden notebooks from preliminary experiments
 preliminary_experiments/*/*_OLD.ipynb
+preliminary_experiments/*/_*.ipynb
 
 # Jupyter notebook checkpoints
 .ipynb_checkpoints
