@@ -6,6 +6,8 @@ metrics, etc).
 import numpy as np
 import pandas as pd
 
+from scipy.stats import spearmanr
+
 from sklearn.metrics import accuracy_score
 
 
@@ -79,27 +81,22 @@ def auco(oracle_rmses, measure_rmses, normalize=False):
     return area
 
 
-def decreasing_coeff(measure_rmses):
-    """Computes the decreasing coefficient (monotonicity), see
-    https://doi.org/10.1021/acs.jcim.9b00975 for more details.
+def spearman_coeff(resids, uncertainties):
+    """Computes Spearman's rank correlation coefficient.
     
     Parameters
     ----------
-    measure_rmses : list
-        RMSEs when using the uncertainty measure to evaluate
+    resids : Series
+        Residuals
+    uncertainties : Series
+        Uncertainty measure values
 
     Returns
     -------
     float
-        The decreasing coefficient
+        The coefficient using scipy's spearmanr function
     """
-    # Implement equation from publication
-    q = len(measure_rmses)
-    n_decreasing = 0
-    for i in range(q-1):
-        if measure_rmses[i] >= measure_rmses[i+1]:
-            n_decreasing += 1
-    coeff = n_decreasing / (q-1)
+    coeff = spearmanr(resids.abs(), uncertainties)[0]
     return coeff
 
 

@@ -29,7 +29,7 @@ from ensemble_uncertainties.evaluators.regression_evaluator import (
 from ensemble_uncertainties.utils.ad_assessment import (
     auco,
     rmses_frac,
-    decreasing_coeff
+    spearman_coeff
 )
 
 from ensemble_uncertainties.utils.plotting import (
@@ -247,7 +247,7 @@ def results_tables_to_file(evaluator, path):
 
 
 def compute_uq_qualities(evaluator):
-    """Computes raw AUCO, normalized AUCO, and Spearman's coefficient.
+    """Computes raw AUCO and Spearman's coefficient.
     
     Parameters
     ----------
@@ -257,15 +257,14 @@ def compute_uq_qualities(evaluator):
     Returns
     -------
     float, float
-        AUCO, normalized AUCO
+        AUCO, Spearman's rank
     """
     resids = evaluator.test_ensemble_preds['resid']
     uncertainties = evaluator.test_ensemble_preds['sdep']
     oracle_rmses, measure_rmses = rmses_frac(resids, uncertainties)
     area = auco(oracle_rmses, measure_rmses)
-    normalized_area = auco(oracle_rmses, measure_rmses, normalize=True)
-    decrease = decreasing_coeff(measure_rmses)
-    return area, normalized_area, decrease
+    rho = spearman_coeff(resids, uncertainties)
+    return area, rho
 
 
 def write_report(args, evaluator):
@@ -308,8 +307,7 @@ def write_report(args, evaluator):
         f.write(f'Train {metric_name}:       {train_quality:.3f}\n')
         f.write(f'Test {metric_name}:        {test_quality:.3f}\n')
         if args.task == 'regression':
-            area, normalized_area, decrease = compute_uq_qualities(evaluator)
-            f.write(f'AUCO:            {area:.3f}\n')
-            f.write(f'Normalized AUCO: {normalized_area:.3f}\n')
-            f.write(f'Decreasing C.:   {decrease:.3f}\n')
+            area, rho = compute_uq_qualities(evaluator)
+            f.write(f'AUCO:           {area:.3f}\n')
+            f.write(f"Spearman's rho: {rho:.3f}\n")
         f.write(f'Overall runtime: {formatted_runtime}\n')
