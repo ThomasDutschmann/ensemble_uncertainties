@@ -41,7 +41,7 @@ def plot_r2(y, tr_preds, te_preds, path='', show=False):
     te_r2 = r2_score(y, te_preds)
     # Get corner values of the outputs/predictions
     smallest = min(min(y), min(te_preds.values), min(tr_preds.values))
-    biggest = max(min(y), max(te_preds.values), max(tr_preds.values))
+    biggest = max(max(y), max(te_preds.values), max(tr_preds.values))
     # Plot
     plt.figure(figsize=(5, 5))
     plt.grid(zorder=1000)
