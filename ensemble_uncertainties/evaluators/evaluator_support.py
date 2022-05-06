@@ -2,12 +2,19 @@
 """Library of functions to support the Evaluator class."""
 
 import numpy as np
+import pandas as pd
+
+from ensemble_uncertainties.constants import (
+    RANDOM_SEED,
+    V_THRESHOLD
+)
 
 from numpy.random import default_rng
 
-from tqdm import tqdm
+from sklearn.feature_selection import VarianceThreshold
+from sklearn.preprocessing import StandardScaler
 
-from ensemble_uncertainties.constants import RANDOM_SEED
+from tqdm import tqdm
 
 
 def use_tqdm(iterable, use):
@@ -67,6 +74,55 @@ def make_columns(repetitions, n_splits):
     pre_cols = [[f'rep{i}_split{j}' for j in splits] for i in reps]
     cols = [item for sublist in pre_cols for item in sublist]
     return cols
+
+
+def scale_and_filter(X_tr, X_te, scale=True, v_threshold=V_THRESHOLD):
+    """Applies variable scaling and variance threshold filtering to train and
+    test inputs.
+
+    Parameters
+    ----------
+    X_tr : DataFrame
+        Train inputs
+    X_te : DataFrame
+        Test inputs
+    scale : bool
+        Whether standardize variables, default: True
+    v_threshold : float
+        The variance threshold to apply after normalization, variables with a
+        variance below will be removed, default: V_THRESHOLD
+
+    Returns
+    -------
+    DataFrame, FataFrame, VarianceThreshold, StandardScaler
+        Scaled and filtered train and test inputs,
+        fitted threshold filter, fitted scaler 
+    """
+    # Drop variables below variance threshold (after normalization)
+    X_tre_norm = pd.DataFrame(
+        X_tr / X_tr.mean(),
+        index=X_tr.index,
+        columns=X_tr.columns
+    ).fillna(1.0)
+    vt = VarianceThreshold(threshold=v_threshold).fit(X_tre_norm)
+    # Do not perform scaling if scale is False
+    if scale:
+        pre_scaler = StandardScaler()
+    else:
+        pre_scaler = StandardScaler(with_mean=False, with_std=False)
+    # Define variance threshold filter after scaling
+    scaler = pre_scaler.fit(X_tr)
+    # Variance-filter and scale train inputs
+    X_tr_sc = pd.DataFrame(scaler.transform(X_tr),
+        index=X_tr.index, columns=X_tr.columns)
+    X_tr_sc_filt = pd.DataFrame(X_tr_sc,
+        index=X_tr.index, columns=X_tr.columns[vt.get_support()])
+    # Variance-filter and scale test inputs
+    X_te_sc = pd.DataFrame(scaler.transform(X_te),
+        index=X_te.index, columns=X_te.columns)
+    X_te_sc_filt = pd.DataFrame(X_te_sc,
+        index=X_te.index, columns=X_te.columns[vt.get_support()])
+    return X_tr_sc_filt, X_te_sc_filt, vt, scaler
 
 
 def make_array(dim):

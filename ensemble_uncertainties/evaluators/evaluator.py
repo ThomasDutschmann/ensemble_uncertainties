@@ -23,12 +23,11 @@ from ensemble_uncertainties.evaluators.evaluator_support import (
     make_array,
     print_summary,
     random_int32,
+    scale_and_filter,
     use_tqdm
 )
 
-from sklearn.feature_selection import VarianceThreshold
 from sklearn.model_selection import KFold
-from sklearn.preprocessing import StandardScaler
 
 
 class Evaluator:
@@ -182,33 +181,13 @@ class Evaluator:
         y_tr : DataFrame
             Train outputs
         """
-        # Drop variables below variance threshold (after normalization)
-        X_tre_norm = pd.DataFrame(
-            X_tr / X_tr.mean(),
-            index=X_tr.index,
-            columns=X_tr.columns
-        ).fillna(1.0)
-        vt = VarianceThreshold(threshold=self.v_threshold).fit(X_tre_norm)
-        # Do not perform scaling if scale is False
-        if self.scale:
-            pre_scaler = StandardScaler()
-        else:
-            pre_scaler = StandardScaler(with_mean=False, with_std=False)
-        # Define variance threshold filter after scaling
-        scaler = pre_scaler.fit(X_tr)
-        # Store as member
+        # Preprocess
+        saf_result = scale_and_filter(X_tr, X_te,
+            scale=self.scale, v_threshold=self.v_threshold)
+        X_tr_sc_filt, X_te_sc_filt, vt, scaler = saf_result
+        # Store filter and scaler as member
         self.vt_filters[rep_index][split_index] = vt
         self.scalers[rep_index][split_index] = scaler
-        # Variance-filter and scale train inputs
-        X_tr_sc = pd.DataFrame(scaler.transform(X_tr),
-            index=X_tr.index, columns=X_tr.columns)
-        X_tr_sc_filt = pd.DataFrame(X_tr_sc,
-            index=X_tr.index, columns=X_tr.columns[vt.get_support()])
-        # Variance-filter and scale test inputs
-        X_te_sc = pd.DataFrame(scaler.transform(X_te),
-            index=X_te.index, columns=X_te.columns)
-        X_te_sc_filt = pd.DataFrame(X_te_sc,
-            index=X_te.index, columns=X_te.columns[vt.get_support()])
         # Construct model (fit)
         # "We clone the estimator to make sure that all the folds are
         # independent, and that it is pickle-able" -- sklearn
