@@ -52,7 +52,7 @@ pip install -e .
 The executable provides helpful information of all the (necessary) command line arguments:
 
 ```console
-python ensemble_uncertainties/exectuable.py -h
+python ensemble_uncertainties/executable.py -h
 ```
 
 For example, if you want to evaluate support vector regression on the provided Tetrahymena toxicity data set<sup>[4]</sup> (first 100 entries, featurized by RDKit descriptors) with 5 repetitions and a 5-fold, storing the output in my_test_results_folder/, you run the executable like so:
