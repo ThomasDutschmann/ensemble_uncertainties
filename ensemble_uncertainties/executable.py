@@ -3,7 +3,7 @@
 
 Example execution:
 
-python executable.py -x X_rdkit.csv -y y.csv -r 10 -t regression -m SVM -v
+python executable.py -x X.csv -y y.csv -r 10 -t regression -m SVM -v
                      -o results/
 """
 
@@ -25,7 +25,38 @@ from ensemble_uncertainties.model_library import models
 
 
 def main():
-    """Entry point."""
+    """usage: ensemble_uncertainties/executable [-h] [-r REPETITIONS]
+                [-n N_SPLITS] -x X_PATH -y Y_PATH -o OUTPUT_PATH -m MODEL_NAME
+                -t TASK [-s SEED] [-v] [-d] [-e V_THRESHOLD] [-a]
+
+    Application to evaluate repetitive k-fold ensemble ADs.
+
+    optional arguments:
+    -h, --help            show this help message and exit
+    -r REPETITIONS, --repetitions REPETITIONS
+                            number of repetitions, default: 100
+    -n N_SPLITS, --n_splits N_SPLITS
+                            number of splits, default: 2
+    -x X_PATH, --independent X_PATH
+                            path to file of dependent variables (X)
+    -y Y_PATH, --dependent Y_PATH
+                            path to file of independent variables (y)
+    -o OUTPUT_PATH, --output OUTPUT_PATH
+                            path to the folder where the results are stored
+    -m MODEL_NAME, --model MODEL_NAME
+                            which model to use, e.g. "svm_rbf" or "dl"
+    -t TASK, --task TASK  "classification" or "regression"
+    -s SEED, --seed SEED  random seed, default: 0
+    -v, --verbose         if set, much output will be produced
+    -d, --deactivate_scaling
+                            if set, variable scaling is deactivated
+                            (for binary inputs)
+    -e V_THRESHOLD, --variance_threshold V_THRESHOLD
+                            variance threshold (after normalization),
+                            default: 0.005
+    -a, --store_all       if set, models and data transformers will also be
+                            stored
+    """
     args = parser.parse_args()
     writing_accessibility(args.output_path)
     model = parse_model(args.task, args.model_name)
