@@ -3,7 +3,7 @@
 """
 
 from su_model_library import models
-from su_automatize import run_evaluation
+from su_automatize import su_run_evaluation
 from su_argparser import parser
 
 from ensemble_uncertainties.error_handling import writing_accessibility
@@ -43,7 +43,7 @@ def main():
     model = models[args.model_name]
     scale = not args.deactivate_scaling
     v_threshold = args.v_threshold
-    run_evaluation(
+    su_run_evaluation(
         X=X,
         y=y,
         model=model,
