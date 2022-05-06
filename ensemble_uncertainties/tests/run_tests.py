@@ -67,8 +67,8 @@ class ExecutableTests(unittest.TestCase):
     def test_all_classification_types(self):
         """Check if all classification model evaluations."""
         cyp1a2_folder = '../test_data/CYP1A2_klingspohn/'
-        cyp1a2_moe_path = f'{cyp1a2_folder}CYP1A2_MOE_first100.csv'
-        cyp1a2_y_path = f'{cyp1a2_folder}CYP1A2_y_first100.csv'
+        cyp1a2_moe_path = f'{cyp1a2_folder}CYP1A2_MOE.csv'
+        cyp1a2_y_path = f'{cyp1a2_folder}CYP1A2_y.csv'
         X, y = load_data(cyp1a2_moe_path, cyp1a2_y_path)
         for model_name in ['shallow', 'deep', 'svm_rbf', 'xgb', 'rf', 'dt']:
             self.error_free_evaluation('classification', model_name, X, y)
@@ -76,8 +76,8 @@ class ExecutableTests(unittest.TestCase):
     def test_all_regression_types(self):
         """Check if all regression model evaluations."""
         tetrah_folder = '../test_data/tetrahymena/'
-        tetrah_rdkit_path = f'{tetrah_folder}tetrah_rdkit_first100.csv'
-        tetrah_y_path = f'{tetrah_folder}tetrah_y_first100.csv'
+        tetrah_rdkit_path = f'{tetrah_folder}tetrah_rdkit.csv'
+        tetrah_y_path = f'{tetrah_folder}tetrah_y.csv'
         X, y = load_data(tetrah_rdkit_path, tetrah_y_path)
         for model_name in ['shallow', 'deep', 'svm_rbf', 'xgb', 'rf', 'dt']:
             self.error_free_evaluation('regression', model_name, X, y)
@@ -87,8 +87,8 @@ class ExecutableTests(unittest.TestCase):
         print('\n\nComparing RBF to Tanimoto for SVR on ECFP\n')
         # Load data
         tetrah_folder = '../test_data/tetrahymena/'
-        tetrah_y_path = f'{tetrah_folder}tetrah_y_first100.csv'
-        tetrah_ecfp_path = f'{tetrah_folder}tetrah_ecfp_first100.csv'
+        tetrah_y_path = f'{tetrah_folder}tetrah_y.csv'
+        tetrah_ecfp_path = f'{tetrah_folder}tetrah_ecfp.csv'
         X, y = load_data(tetrah_ecfp_path, tetrah_y_path)
         # Run RBF Evaluator
         rbf_evaluator = RegressionEvaluator(
