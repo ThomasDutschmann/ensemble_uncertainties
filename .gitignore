@@ -20,6 +20,7 @@ test_notebooks/
 # Old or hidden notebooks from preliminary experiments
 preliminary_experiments/*/*_OLD.ipynb
 preliminary_experiments/*/_*.ipynb
+preliminary_experiments/_*/*
 
 # Jupyter notebook checkpoints
 .ipynb_checkpoints
