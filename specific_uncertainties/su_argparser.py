@@ -11,7 +11,7 @@ from ensemble_uncertainties.constants import (
 
 
 parser = argparse.ArgumentParser(
-    prog='ensemble_uncertainties/specific_uncertainties/executable',
+    prog='ensemble_uncertainties/specific_uncertainties/su_executable',
     description='Application to evaluate prediction uncertainties.'
 )
 

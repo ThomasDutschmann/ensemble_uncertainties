@@ -42,7 +42,7 @@ from tqdm import tqdm
 mpl.rcParams['figure.dpi'] = DPI
 
 
-def run_evaluation(X, y, model, n_splits=N_SPLITS, seed=RANDOM_SEED,
+def su_run_evaluation(X, y, model, n_splits=N_SPLITS, seed=RANDOM_SEED,
         scale=True, v_threshold=V_THRESHOLD, path=None, args=None):
     """Runs MC Dropout UQ evaluation for given settings.
 
