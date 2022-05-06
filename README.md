@@ -47,7 +47,7 @@ pip install -e .
 ```
 
 # How To Use
-## Running an evaluation
+## Running the executable
 
 The executable provides helpful information of all the (necessary) command line arguments:
 
@@ -58,12 +58,60 @@ python ensemble_uncertainties/exectuable.py -h
 For example, if you want to evaluate support vector regression on the provided Tetrahymena toxicity data set<sup>[4]</sup> (first 100 entries, featurized by RDKit descriptors) with 5 repetitions and a 5-fold, storing the output in my_test_results_folder/, you run the executable like so:
 
 ```console
-python ensemble_uncertainties/executable.py -r 5 -n 5 -x test_data/tetrahymena/tetrah_X.csv -y test_data/tetrahymena/tetrah_y.csv -m svm_rbf -t regression -o my_test_results_folder/ -v
+python ensemble_uncertainties/executable.py -r 5 -n 5 -x test_data/tetrahymena/tetrah_rdkit.csv -y test_data/tetrahymena/tetrah_y.csv -m svm_rbf -t regression -o my_test_results_folder/ -v
 ```
 
 To test the classification case, the first 100 entries of the CYP1A2 dataset from the applicability domain study by Klingspohn et al. is provided.<sup>[5]</sup>
 
 Note: It is important that the CSV-files are semicolon-separated, have a header, have an index column named "id" at the first position and that the output values in the y-files are in a column named "y". See the provided test files in test_data/.
+
+
+## Development using ensemble_uncertainties
+
+Parts of the framework can also be used inside Python to conveniently estimate prediction uncertainties. Consider the provided example script below. Again, be reminded that external files need to provide the required format described above. Otherwise, they have to be converted.
+
+```
+# Run inside ensemble_uncertainties/
+
+import pandas as pd
+
+from ensemble_uncertainties.automatize import (
+    compute_uq_qualities
+)
+from ensemble_uncertainties.evaluators.regression_evaluator import (
+    RegressionEvaluator
+)
+from ensemble_uncertainties.executable import (
+    load_data
+)
+
+from sklearn.svm import SVR
+
+
+# Load data
+tetrah_folder = 'test_data/tetrahymena/'
+tetrah_rdkit_path = f'{tetrah_folder}tetrah_rdkit.csv'
+tetrah_y_path = f'{tetrah_folder}tetrah_y.csv'
+X, y = load_data(tetrah_rdkit_path, tetrah_y_path)
+
+# Set evaluator using some custom settings
+rbf_evaluator = RegressionEvaluator(
+    SVR(),
+    repetitions=5,
+    n_splits=5,
+    verbose=False
+)
+
+# Run Evaluator
+rbf_evaluator.perform(X, y)
+
+# Inspect results
+pred_quality = rbf_evaluator.test_ensemble_quality
+auco, rho = compute_uq_qualities(rbf_evaluator)
+print(f'R^2:             {pred_quality:.3f}')
+print(f'AUCO:            {auco:.3f}')
+print(f"Spearman's rho:  {rho:.3f}")
+```
 
 
 ### References
