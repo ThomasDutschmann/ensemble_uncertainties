@@ -25,9 +25,10 @@ from ensemble_uncertainties.model_library import models
 
 
 def main():
-    """usage: ensemble_uncertainties/executable [-h] [-r REPETITIONS]
-                [-n N_SPLITS] -x X_PATH -y Y_PATH -o OUTPUT_PATH -m MODEL_NAME
-                -t TASK [-s SEED] [-v] [-d] [-e V_THRESHOLD] [-a]
+    """usage: ensemble_uncertainties/ensemble_uncertainties/executable [-h]
+                [-r REPETITIONS] [-n N_SPLITS] -x X_PATH -y Y_PATH
+                -o OUTPUT_PATH -m MODEL_NAME -t TASK [-s SEED] [-v] [-d]
+                [-e V_THRESHOLD] [-a]
 
     Application to evaluate repetitive k-fold ensemble ADs.
 
