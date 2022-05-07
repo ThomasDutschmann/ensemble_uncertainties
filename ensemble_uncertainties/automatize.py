@@ -7,6 +7,8 @@ import os
 import pickle
 import shutil
 
+from datetime import datetime
+
 from ensemble_uncertainties.constants import (
     N_REPS,
     N_SPLITS,
@@ -14,14 +16,14 @@ from ensemble_uncertainties.constants import (
     V_THRESHOLD
 )
 
-from datetime import datetime
+from ensemble_uncertainties.evaluators.classification_evaluator import (
+    ClassificationEvaluator
+)
 
 from ensemble_uncertainties.evaluators.evaluator_support import (
     format_time_elapsed
 )
-from ensemble_uncertainties.evaluators.classification_evaluator import (
-    ClassificationEvaluator
-)
+
 from ensemble_uncertainties.evaluators.regression_evaluator import (
     RegressionEvaluator
 )
