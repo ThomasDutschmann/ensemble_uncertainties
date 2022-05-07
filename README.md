@@ -89,13 +89,12 @@ from sklearn.svm import SVR
 
 
 # Load data
-tetrah_folder = 'test_data/tetrahymena/'
-tetrah_rdkit_path = f'{tetrah_folder}tetrah_rdkit.csv'
-tetrah_y_path = f'{tetrah_folder}tetrah_y.csv'
+tetrah_rdkit_path = 'test_data/tetrahymena/tetrah_rdkit.csv'
+tetrah_y_path = 'test_data/tetrahymena/tetrah_y.csv'
 X, y = load_data(tetrah_rdkit_path, tetrah_y_path)
 
 # Set evaluator using some custom settings
-rbf_evaluator = RegressionEvaluator(
+svr_evaluator = RegressionEvaluator(
     SVR(),
     repetitions=5,
     n_splits=5,
@@ -103,11 +102,11 @@ rbf_evaluator = RegressionEvaluator(
 )
 
 # Run Evaluator
-rbf_evaluator.perform(X, y)
+svr_evaluator.perform(X, y)
 
 # Inspect results
-pred_quality = rbf_evaluator.test_ensemble_quality
-auco, rho = compute_uq_qualities(rbf_evaluator)
+pred_quality = svr_evaluator.test_ensemble_quality
+auco, rho = compute_uq_qualities(svr_evaluator)
 print(f'R^2:             {pred_quality:.3f}')
 print(f'AUCO:            {auco:.3f}')
 print(f"Spearman's rho:  {rho:.3f}")
