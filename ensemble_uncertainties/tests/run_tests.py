@@ -6,7 +6,7 @@ Must be run from
 in order to find the test input files.
 
 All in all, the tests provided here roughly take
-1 minute and 30 seconds on my RTX 3080 Ti.
+2 minutes and 30 seconds on my RTX 3080 Ti.
 """
 
 import os
