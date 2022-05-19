@@ -13,6 +13,7 @@ from numpy.random import default_rng
 
 from sklearn.feature_selection import VarianceThreshold
 from sklearn.preprocessing import StandardScaler
+from sklearn.utils import resample
 
 from tqdm import tqdm
 
@@ -76,6 +77,28 @@ def make_columns(repetitions, n_splits):
     return cols
 
 
+def bootstrap(X, random_state=0):
+    """Implements the bootstrap sampling method.
+
+    Parameters
+    ----------
+    X : DataFrame
+        Inputs
+    random_state : int
+        State of the underlying random generator, default: 0
+
+    Returns
+    -------
+    list, list
+        Bootstrapped train and test indeces (numerical)
+    """
+    idx = list(range(len(X)))
+    pre_idx_train = resample(idx, random_state=random_state)
+    idx_train = list(set(list(pre_idx_train)))
+    idx_test = [i for i in idx if i not in idx_train]
+    return idx_train, idx_test
+
+
 def scale_and_filter(X_tr, X_te, scale=True, v_threshold=V_THRESHOLD):
     """Applies variable scaling and variance threshold filtering to train and
     test inputs.
@@ -94,7 +117,7 @@ def scale_and_filter(X_tr, X_te, scale=True, v_threshold=V_THRESHOLD):
 
     Returns
     -------
-    DataFrame, FataFrame, VarianceThreshold, StandardScaler
+    DataFrame, DataFrame, VarianceThreshold, StandardScaler
         Scaled and filtered train and test inputs,
         fitted threshold filter, fitted scaler 
     """

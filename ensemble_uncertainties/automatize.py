@@ -45,8 +45,8 @@ from ensemble_uncertainties.utils.plotting import (
 
 def run_evaluation(model, task, X, y, verbose=True, repetitions=N_REPS,
         n_splits=N_SPLITS, seed=RANDOM_SEED, scale=True, 
-        v_threshold=V_THRESHOLD, path=None, store_all=False, args=None,
-        follow_up=None):
+        v_threshold=V_THRESHOLD, bootstrapping=False, path=None,
+        store_all=False, args=None, follow_up=None):
     """Runs evaluation with an EnsembleADEvaluator for given settings.
 
     Parameters
@@ -71,10 +71,13 @@ def run_evaluation(model, task, X, y, verbose=True, repetitions=N_REPS,
     seed : int
         Seed to use for splitting, default: constants.RANDOM_SEED
     scale : bool
-        Whether standardize variables, default: True
+        Whether to standardize features, default: True
     v_threshold : float
         The variance threshold to apply after normalization, variables
         with a variance below will be removed, default: V_THRESHOLD
+    bootstrapping : bool
+        If True, bootstrapping will be used to generate the subsamples,
+        default: False. n_splits will be automatically set to 1.
     path : str
         Path to the directory to store the results in, default: None
     store_all : bool
@@ -101,7 +104,8 @@ def run_evaluation(model, task, X, y, verbose=True, repetitions=N_REPS,
         n_splits=n_splits,
         seed=seed,
         scale=scale,
-        v_threshold=v_threshold
+        v_threshold=v_threshold,
+        bootstrapping=bootstrapping
     )
     # Run evaluation
     evaluator.perform(X, y)
@@ -294,7 +298,10 @@ def write_report(args, evaluator):
         f.write(f'model object: {type(evaluator.model)}\n')
         f.write(f'seed:         {args.seed}\n')
         f.write(f'repetitions:  {args.repetitions}\n')
-        f.write(f'n_splits:     {args.n_splits}\n')
+        f.write(f'n_splits:     {evaluator.n_splits}\n')
+        f.write(f'scaling:      {not args.deactivate_scaling}\n')
+        f.write(f'v.threshold:  {args.v_threshold}\n')
+        f.write(f'bootstrapped: {args.bootstrapping}\n')
         f.write(f'verbose:      {args.verbose}\n')
         f.write('\n')
         f.write('Data info\n')
@@ -311,5 +318,5 @@ def write_report(args, evaluator):
         if args.task == 'regression':
             area, rho = compute_uq_qualities(evaluator)
             f.write(f'AUCO:           {area:.3f}\n')
-            f.write(f"Spearman's rho: {rho:.3f}\n")
+            f.write(f"Spearman's rho:  {rho:.3f}\n")
         f.write(f'Overall runtime: {formatted_runtime}\n')

@@ -18,6 +18,7 @@ from copy import deepcopy
 from datetime import datetime
 
 from ensemble_uncertainties.evaluators.evaluator_support import (
+    bootstrap,
     format_time_elapsed,
     make_columns,
     make_array,
@@ -39,7 +40,7 @@ class Evaluator:
 
     def __init__(self, model, verbose=True, repetitions=N_REPS,
             n_splits=N_SPLITS, seed=RANDOM_SEED, scale=True,
-            v_threshold=V_THRESHOLD):
+            v_threshold=V_THRESHOLD, bootstrapping=False):
         """Initializer, sets constants and initializes empty tables.
         
         Parameters
@@ -60,6 +61,9 @@ class Evaluator:
         v_threshold : float
             The variance threshold to apply after normalization, variables
             with a variance below will be removed, default: V_THRESHOLD
+        bootstrapping : bool
+            If True, bootstrapping will be used to generate the subsamples,
+            default: False. n_splits will be automatically set to 1.
         """
         # Set given parameters
         self.model = model
@@ -69,6 +73,10 @@ class Evaluator:
         self.seed = seed
         self.scale = scale
         self.v_threshold = v_threshold
+        self.bootstrapping = bootstrapping
+        # Set n_splits to 1 in case of bootstrap:
+        if bootstrapping:
+            self.n_splits = 1
         # Initialize list- and table-like members
         # to conveniently append data to them
         self.train_preds = pd.DataFrame()
@@ -130,6 +138,29 @@ class Evaluator:
                 print(f'Test {self.metric_name}:  {test_quality:.3f}\n')
         self.finalize()
 
+    def make_splits(self, rep_index):
+        """Generates train/test splits.
+
+        Parameters
+        ----------
+        rep_index : int
+            Index of current repetition
+        
+        Returns
+        -------
+        list
+            List of train/test index pairs
+        """
+        state = self.random_states[rep_index]
+        if self.bootstrapping:
+            splits = [bootstrap(self.X, random_state=state)]
+        else:
+            kfold = KFold(n_splits=self.n_splits,
+                random_state=state, shuffle=True)
+            splits = kfold.split(self.X)
+        split_iter = use_tqdm(list(enumerate(splits)), self.verbose)
+        return split_iter
+
     def single_repetition(self, rep_index):
         """Performs a single repetition (once completely through all splits).
 
@@ -144,10 +175,7 @@ class Evaluator:
             Train predictions & performance, test predictions & performance
         """
         # Define splitting scheme
-        kfold = KFold(n_splits=self.n_splits,
-            random_state=self.random_states[rep_index], shuffle=True)
-        splits = kfold.split(self.X)
-        split_iter = use_tqdm(list(enumerate(splits)), self.verbose)
+        split_iter = self.make_splits(rep_index)
         # Run all folds
         for split_index, (train_id, test_id) in split_iter:
             # Select train and test fraction

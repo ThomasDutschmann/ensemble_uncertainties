@@ -22,7 +22,7 @@ class RegressionEvaluator(Evaluator):
 
     def __init__(self, model, verbose=True, repetitions=N_REPS,
             n_splits=N_SPLITS, seed=RANDOM_SEED, scale=True,
-            v_threshold=V_THRESHOLD):
+            v_threshold=V_THRESHOLD, bootstrapping=False):
         super().__init__(
             model=model,
             verbose=verbose,
@@ -30,7 +30,8 @@ class RegressionEvaluator(Evaluator):
             n_splits=n_splits,
             seed=seed,
             scale=scale,
-            v_threshold=v_threshold
+            v_threshold=v_threshold,
+            bootstrapping=bootstrapping
         )
         self.task = 'regression'
         self.metric = r2_score
@@ -55,6 +56,9 @@ class RegressionEvaluator(Evaluator):
         results['predicted'] = predictions.mean(axis=1)
         # Compute sdev of ensemble predictions by output distribution
         results['sdep'] = predictions.std(axis=1)
-        results['resid'] = self.y['y'] - results['predicted']
-        quality = self.metric(self.y['y'], results['predicted'])
+        # Take subset of y (important when doing bootstrapping)
+        results.dropna(subset=['predicted'], inplace=True)
+        adjusted_y = self.y.loc[results.index]
+        results['resid'] = adjusted_y['y'] - results['predicted']
+        quality = self.metric(adjusted_y['y'], results['predicted'])
         return results, quality

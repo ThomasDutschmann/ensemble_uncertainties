@@ -105,7 +105,7 @@ parser.add_argument(
     '-d',
     '--deactivate_scaling',
     dest='deactivate_scaling',
-    help='if set, variable scaling is deactivated (for binary inputs)',
+    help='if set, feature scaling is deactivated (for binary/counts)',
     action='store_true',
 )
 
@@ -123,5 +123,13 @@ parser.add_argument(
     '--store_all',
     dest='store_all',
     help='if set, models and data transformers will also be stored',
+    action='store_true',
+)
+
+parser.add_argument(
+    '-b',
+    '--bootstrapping',
+    dest='bootstrapping',
+    help='if set, bootstrapping will be used to generate the subsamples',
     action='store_true',
 )

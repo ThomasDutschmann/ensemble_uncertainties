@@ -22,7 +22,7 @@ class ClassificationEvaluator(Evaluator):
 
     def __init__(self, model, verbose=True, repetitions=N_REPS,
             n_splits=N_SPLITS, seed=RANDOM_SEED, scale=True,
-            v_threshold=V_THRESHOLD):
+            v_threshold=V_THRESHOLD, bootstrapping=False):
         super().__init__(
             model=model,
             verbose=verbose,
@@ -30,7 +30,8 @@ class ClassificationEvaluator(Evaluator):
             n_splits=n_splits,
             seed=seed,
             scale=scale,
-            v_threshold=v_threshold
+            v_threshold=v_threshold,
+            bootstrapping=bootstrapping
         )
         self.task = 'classification'
         self.metric = accuracy_score
@@ -56,6 +57,9 @@ class ClassificationEvaluator(Evaluator):
         # Compute posterior probabilities by class frequency
         results['probA'] = predictions.mean(axis=1)
         results['probB'] = 1 - results['probA']
-        results['correct'] = self.y['y'] == results['predicted']
-        quality = self.metric(self.y['y'], results['predicted'])
+        # Take subset of y (important when doing bootstrapping)
+        results.dropna(subset=['predicted'], inplace=True)
+        adjusted_y = self.y.loc[results.index]
+        results['correct'] = adjusted_y['y'] == results['predicted']
+        quality = self.metric(adjusted_y['y'], results['predicted'])
         return results, quality
