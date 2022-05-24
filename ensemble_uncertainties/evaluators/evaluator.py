@@ -1,5 +1,10 @@
 
-"""Base class. Contains core functionality. Ready to be extended."""
+"""Base class. Contains core functionality. Ready to be extended.
+
+The Evaluator was designed to keep track of all scalers, variance thresholds,
+models, and predictions for each split in each iteration to allow for a
+complete analysis afterwards, if necessary.
+"""
 
 import numpy as np
 import pandas as pd

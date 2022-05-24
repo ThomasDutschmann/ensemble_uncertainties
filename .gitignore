@@ -17,10 +17,9 @@ eggs/
 # Jupyter notebooks for testing
 test_notebooks/
 
-# Old or hidden notebooks from preliminary experiments
-preliminary_experiments/*/*_OLD.ipynb
-preliminary_experiments/*/_*.ipynb
-preliminary_experiments/_*/*
+# Old or hidden notebooks
+preliminary_experiments/
+results_analysis/
 
 # Jupyter notebook checkpoints
 .ipynb_checkpoints
@@ -39,6 +38,3 @@ ENV/
 
 # Results
 test_results/
-
-# Stored images from preliminary experiments
-preliminary_experiments/*/*plots*/
