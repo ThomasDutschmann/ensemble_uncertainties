@@ -6,8 +6,6 @@ import os
 
 import numpy as np
 
-import pandas as pd
-
 import tensorflow as tf
 
 from ensemble_uncertainties.neural_estimators.architectures import (
