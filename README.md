@@ -70,7 +70,7 @@ Note: It is important that the CSV-files are semicolon-separated, have a header,
 
 Parts of the framework can also be used inside Python to conveniently estimate prediction uncertainties. Consider the provided example script below. Again, be reminded that external files need to provide the required format described above. Otherwise, they have to be converted.
 
-```
+```python
 # Run inside ensemble_uncertainties/
 
 import pandas as pd
