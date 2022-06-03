@@ -3,10 +3,11 @@ channels:
   - conda-forge
 dependencies:
   - python
+  - pip
   - numpy
   - pandas
   - scikit-learn
   - tqdm
   - matplotlib
   - xgboost
-  - tensorflow>=2.6.0
+  - tensorflow>=2.8.1
