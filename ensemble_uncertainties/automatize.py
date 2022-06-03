@@ -42,11 +42,13 @@ from ensemble_uncertainties.utils.plotting import (
     plot_cumulative_accuracy
 )
 
+from sklearn.preprocessing import Normalizer
+
 
 def run_evaluation(model, task, X, y, verbose=True, repetitions=N_REPS,
         n_splits=N_SPLITS, seed=RANDOM_SEED, scale=True, 
-        v_threshold=V_THRESHOLD, bootstrapping=False, path=None,
-        store_all=False, args=None, follow_up=None):
+        v_threshold=V_THRESHOLD, bootstrapping=False, normalize=False,
+        path=None, store_all=False, args=None, follow_up=None):
     """Runs evaluation with an EnsembleADEvaluator for given settings.
 
     Parameters
@@ -78,6 +80,9 @@ def run_evaluation(model, task, X, y, verbose=True, repetitions=N_REPS,
     bootstrapping : bool
         If True, bootstrapping will be used to generate the subsamples,
         default: False. n_splits will be automatically set to 1.
+    normalize : bool
+        Whether to normalize the features instead of to standardize them,
+        default: False. 
     path : str
         Path to the directory to store the results in, default: None
     store_all : bool
@@ -107,6 +112,8 @@ def run_evaluation(model, task, X, y, verbose=True, repetitions=N_REPS,
         v_threshold=v_threshold,
         bootstrapping=bootstrapping
     )
+    if normalize:
+        evaluator.set_scaler_class(Normalizer)
     # Run evaluation
     evaluator.perform(X, y)
     # Store input space transformers, models, and single repetition
@@ -302,6 +309,7 @@ def write_report(args, evaluator):
         f.write(f'scaling:      {not args.deactivate_scaling}\n')
         f.write(f'v.threshold:  {args.v_threshold}\n')
         f.write(f'bootstrapped: {args.bootstrapping}\n')
+        f.write(f'scale object: {evaluator.scaler_class}\n')
         f.write(f'verbose:      {args.verbose}\n')
         f.write('\n')
         f.write('Data info\n')

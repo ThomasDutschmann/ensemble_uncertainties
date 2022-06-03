@@ -26,9 +26,9 @@ from ensemble_uncertainties.model_library import models
 
 def main():
     """usage: ensemble_uncertainties/ensemble_uncertainties/executable [-h]
-                [-r REPETITIONS] [-n N_SPLITS] -x X_PATH -y Y_PATH
-                -o OUTPUT_PATH -m MODEL_NAME -t TASK [-s SEED] [-v] [-d]
-                [-e V_THRESHOLD] [-a] [-b]
+        [-r REPETITIONS] [-n N_SPLITS] -x X_PATH -y Y_PATH -o OUTPUT_PATH
+        -m MODEL_NAME -t TASK [-s SEED] [-v] [-d] [-e V_THRESHOLD] [-a] [-b]
+        [-l]
 
     Application to evaluate repetitive k-fold ensemble ADs.
 
@@ -55,10 +55,12 @@ def main():
     -e V_THRESHOLD, --variance_threshold V_THRESHOLD
                             variance threshold (after normalization),
                             default: 0.005
-    -a, --store_all       if set, models and data transformers
-                            will also be stored
-    -b, --bootstrapping   if set, bootstrapping will be used to
-                            generate the subsamples
+    -a, --store_all       if set, models and data
+                          transformers will also be stored
+    -b, --bootstrapping   if set, bootstrapping will be
+                          used to generate the subsamples
+    -l, --normalize       if set, features will be normalized
+                          instead of standardized
     """
     args = parser.parse_args()
     writing_accessibility(args.output_path)
@@ -78,6 +80,7 @@ def main():
         scale=scale,
         v_threshold=v_threshold,
         bootstrapping=args.bootstrapping,
+        normalize=args.normalize,
         path=args.output_path,
         store_all=args.store_all,
         args=args

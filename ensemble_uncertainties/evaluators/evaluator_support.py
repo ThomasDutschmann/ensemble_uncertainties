@@ -99,7 +99,8 @@ def bootstrap(X, random_state=0):
     return idx_train, idx_test
 
 
-def scale_and_filter(X_tr, X_te, scale=True, v_threshold=V_THRESHOLD):
+def scale_and_filter(X_tr, X_te, scaler_class=StandardScaler, scale=True,
+        v_threshold=V_THRESHOLD):
     """Applies variable scaling and variance threshold filtering to train and
     test inputs.
 
@@ -109,8 +110,11 @@ def scale_and_filter(X_tr, X_te, scale=True, v_threshold=V_THRESHOLD):
         Train inputs
     X_te : DataFrame
         Test inputs
+    scaler_class : scaler
+        Scaler initializer, must result in an object that implements .fit(X)
+        and .transform(X), default: sklearn.preprocessing.StandardScaler
     scale : bool
-        Whether standardize variables, default: True
+        Whether to standardize variables, default: True
     v_threshold : float
         The variance threshold to apply after normalization, variables with a
         variance below will be removed, default: V_THRESHOLD
@@ -130,9 +134,9 @@ def scale_and_filter(X_tr, X_te, scale=True, v_threshold=V_THRESHOLD):
     vt = VarianceThreshold(threshold=v_threshold).fit(X_tre_norm)
     # Do not perform scaling if scale is False
     if scale:
-        pre_scaler = StandardScaler()
+        pre_scaler = scaler_class()
     else:
-        pre_scaler = StandardScaler(with_mean=False, with_std=False)
+        pre_scaler = scaler_class(with_mean=False, with_std=False)
     # Define variance threshold filter after scaling
     scaler = pre_scaler.fit(X_tr)
     # Variance-filter and scale train inputs

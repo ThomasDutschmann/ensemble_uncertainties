@@ -34,6 +34,7 @@ from ensemble_uncertainties.evaluators.evaluator_support import (
 )
 
 from sklearn.model_selection import KFold
+from sklearn.preprocessing import StandardScaler
 
 
 class Evaluator:
@@ -92,6 +93,8 @@ class Evaluator:
         self.test_ensemble_preds = pd.DataFrame()
         self.train_qualities = list()
         self.test_qualities = list()
+        # Set type of feature scaling:
+        self.scaler_class = StandardScaler
 
     def initialize_before_run(self):
         """Sets seed, initializes empty matrices and starts timer."""
@@ -216,7 +219,8 @@ class Evaluator:
         """
         # Preprocess
         saf_result = scale_and_filter(X_tr, X_te,
-            scale=self.scale, v_threshold=self.v_threshold)
+            scaler_class=self.scaler_class, scale=self.scale,
+            v_threshold=self.v_threshold)
         X_tr_sc_filt, X_te_sc_filt, vt, scaler = saf_result
         # Store filter and scaler as member
         self.vt_filters[rep_index][split_index] = vt
@@ -280,6 +284,18 @@ class Evaluator:
         self.train_ensemble_quality = train_quality
         self.test_ensemble_preds = test_results
         self.test_ensemble_quality = test_quality
+
+    def set_scaler_class(self, scaler_class):
+        """Changes the feature scaling method,
+        default: sklearn.preprocessing.StandardScaler.
+
+        Parameters
+        ----------
+        scaler_class : scaler
+            Scaler initializer, must result in an object
+            that implements .fit(X) and .transform(X)
+        """
+        self.scaler_class = scaler_class
 
     @abstractmethod
     def handle_predictions(self, predictions):

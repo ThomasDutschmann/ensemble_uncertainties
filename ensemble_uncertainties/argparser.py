@@ -133,3 +133,11 @@ parser.add_argument(
     help='if set, bootstrapping will be used to generate the subsamples',
     action='store_true',
 )
+
+parser.add_argument(
+    '-l',
+    '--normalize',
+    dest='normalize',
+    help='if set, features will be normalized instead of standardized',
+    action='store_true',
+)
