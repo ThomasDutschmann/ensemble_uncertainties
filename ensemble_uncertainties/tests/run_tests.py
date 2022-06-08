@@ -5,8 +5,8 @@ Must be run from
     ensemble_uncertainties/ensemble_uncertainties/
 in order to find the test input files.
 
-All in all, the tests provided here roughly take
-2 minutes and 30 seconds on my RTX 3080 Ti.
+All in all, the tests provided here roughly
+take 3 minutes on my RTX 3080 Ti.
 """
 
 import os
