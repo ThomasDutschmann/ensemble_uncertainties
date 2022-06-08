@@ -125,7 +125,7 @@ def scale_and_filter(X_tr, X_te, scaler_class=StandardScaler, scale=True,
         Scaled and filtered train and test inputs,
         fitted threshold filter, fitted scaler 
     """
-    # Drop variables below variance threshold (after normalization)
+    # Drop variables below variance threshold (after mean-scaling)
     X_tre_norm = pd.DataFrame(
         X_tr / X_tr.mean(),
         index=X_tr.index,
