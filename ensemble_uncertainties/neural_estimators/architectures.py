@@ -1,8 +1,8 @@
 
 """Network architectures for our feed forward neural estimators."""
 
-from tensorflow.keras.layers import Input, Dense, Dropout
-from tensorflow.keras.models import Model, Sequential
+from keras.layers import Input, Dense, Dropout
+from keras.models import Model, Sequential
 
 
 def deep_architecture(output_activation):
