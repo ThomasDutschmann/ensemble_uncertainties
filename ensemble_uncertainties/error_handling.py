@@ -2,15 +2,10 @@
 """Handle errors and inform user."""
 
 import errno
-import logging
-import sys
 
 from ensemble_uncertainties.model_library import models
 
 from os.path import isfile
-
-
-logging.basicConfig(format='\nERROR:\n%(message)s\n')
 
 
 def file_availability(path):
@@ -22,8 +17,7 @@ def file_availability(path):
         Path to the CSV-file
     """
     if not isfile(path):
-        logging.error(f'File "{path}" does not exist.')
-        sys.exit(1)        
+        FileNotFoundError  (f'File "{path}" does not exist.')     
 
 
 def file_compatibility(path):
@@ -37,12 +31,11 @@ def file_compatibility(path):
     with open(path) as f:
         first_line = f.readline()
         if not first_line.startswith('id;'):
-            logging.error(
+            raise IOError(
                 f'File "{path}" does not fulfill requirements.\n' + \
                 'The file must be a semicolon-separated CSV-file ' + \
                 'with a header and an index column named "id".'
             )
-            sys.exit(1)
 
 
 def y_file_compatibility(path):
@@ -56,13 +49,12 @@ def y_file_compatibility(path):
     with open(path) as f:
         first_line = f.readline()
         if not first_line.startswith('id;y'):
-            logging.error(
+            raise IOError(
                 f'File "{path}" does not fulfill requirements.\n' + \
                 'The file must be a semicolon-separated CSV-file ' + \
                 'with a header and an index column named "id" and ' + \
                 'the column of targets must be named "y".'
             )
-            sys.exit(1)  
 
 
 def model_availability(task, model_name):
@@ -78,11 +70,10 @@ def model_availability(task, model_name):
     """
     names = models[task].keys()
     if model_name not in names:
-        logging.error(
+        raise KeyError(
             f'Model "{model_name}" is not available.\n' +
             f'Available models are: {", ".join(names)}.'
         )
-        sys.exit(1)
 
 
 def writing_accessibility(path):
@@ -97,5 +88,4 @@ def writing_accessibility(path):
         _ = open(path)
     except IOError as e:
         if e.errno == errno.EACCES:
-            logging.error(f'No permission to write in "{path}."')
-            sys.exit(1)
+            raise PermissionError(f'No permission to write in "{path}."')
