@@ -94,7 +94,7 @@ def bootstrap(X, random_state=0):
     """
     idx = list(range(len(X)))
     pre_idx_train = resample(idx, random_state=random_state)
-    idx_train = list(set(list(pre_idx_train)))
+    idx_train = list(pre_idx_train)
     idx_test = [i for i in idx if i not in idx_train]
     return idx_train, idx_test
 

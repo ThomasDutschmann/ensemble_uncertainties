@@ -248,6 +248,9 @@ class Evaluator:
             Test inputs
         """
         # Compute predictions
+        # Drop duplicate train entries when bootstrapping was used
+        if self.bootstrapping:
+            X_train = X_train.drop_duplicates(keep='first')
         tr_preds = pd.DataFrame(model.predict(X_train), index=X_train.index)
         te_preds = pd.DataFrame(model.predict(X_test), index=X_test.index)
         # Extend tables with train predictions
