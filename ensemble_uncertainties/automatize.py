@@ -73,7 +73,8 @@ def run_evaluation(model, task, X, y, verbose=True, repetitions=N_REPS,
     seed : int
         Seed to use for splitting, default: constants.RANDOM_SEED
     scale : bool
-        Whether to standardize features, default: True
+        Whether to standardize features, default: True.
+        Automatically set to True when using normalization.
     v_threshold : float
         The variance threshold to apply after normalization, variables
         with a variance below will be removed, default: V_THRESHOLD
@@ -114,6 +115,7 @@ def run_evaluation(model, task, X, y, verbose=True, repetitions=N_REPS,
     )
     if normalize:
         evaluator.set_scaler_class(Normalizer)
+        evaluator.scale = True
     # Run evaluation
     evaluator.perform(X, y)
     # Store input space transformers, models, and single repetition
