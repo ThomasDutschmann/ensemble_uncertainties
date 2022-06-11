@@ -12,7 +12,7 @@ from ensemble_uncertainties.constants import (
 
 parser = argparse.ArgumentParser(
     prog='ensemble_uncertainties/specific_uncertainties/su_executable',
-    description='Application to evaluate prediction uncertainties.'
+    description='Application to evaluate specific prediction uncertainties.'
 )
 
 parser.add_argument(
@@ -88,4 +88,12 @@ parser.add_argument(
     type=float,
     help=f'variance threshold (after normalization), default: {V_THRESHOLD}',
     default=V_THRESHOLD
+)
+
+parser.add_argument(
+    '-l',
+    '--normalize',
+    dest='normalize',
+    help='if set, features will be normalized instead of standardized',
+    action='store_true',
 )

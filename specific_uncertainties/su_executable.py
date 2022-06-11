@@ -11,9 +11,9 @@ from ensemble_uncertainties.executable import load_data
 
 
 def main():
-    """usage: ensemble_uncertainties/specific_uncertainties/executable [-h]
-                [-n N_SPLITS] -x X_PATH -y Y_PATH -o OUTPUT_PATH -m MODEL_NAME
-                [-s SEED] [-d] [-e V_THRESHOLD]
+    """usage: ensemble_uncertainties/specific_uncertainties/su_executable [-h]
+        [-n N_SPLITS] -x X_PATH -y Y_PATH -o OUTPUT_PATH -m MODEL_NAME
+        [-s SEED] [-d] [-e V_THRESHOLD] [-l]
 
     Application to evaluate prediction uncertainties.
 
@@ -31,11 +31,13 @@ def main():
                             which model (with uq estimation!) to use
     -s SEED, --seed SEED  random seed, default: 0
     -d, --deactivate_scaling
-                            if set, variable scaling is deactivated 
+                            if set, variable scaling is deactivated
                             (for binary inputs)
     -e V_THRESHOLD, --variance_threshold V_THRESHOLD
                             variance threshold (after normalization),
                             default: 0.005
+    -l, --normalize       if set, features will be normalized instead of
+                            standardized
     """
     args = parser.parse_args()
     writing_accessibility(args.output_path)
@@ -51,6 +53,7 @@ def main():
         seed=args.seed,
         scale=scale,
         v_threshold=v_threshold,
+        normalize=args.normalize,
         path=args.output_path,
         args=args
     )

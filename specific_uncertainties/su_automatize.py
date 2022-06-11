@@ -34,6 +34,7 @@ from ensemble_uncertainties.utils.plotting import (
 
 from sklearn.metrics import r2_score
 from sklearn.model_selection import KFold
+from sklearn.preprocessing import Normalizer, StandardScaler
 
 from tqdm import tqdm
 
@@ -43,7 +44,8 @@ mpl.rcParams['figure.dpi'] = DPI
 
 
 def su_run_evaluation(X, y, model, n_splits=N_SPLITS, seed=RANDOM_SEED,
-        scale=True, v_threshold=V_THRESHOLD, path=None, args=None):
+        scale=True, v_threshold=V_THRESHOLD, normalize=False, path=None,
+        args=None):
     """Runs MC Dropout UQ evaluation for given settings.
 
     Parameters
@@ -62,10 +64,14 @@ def su_run_evaluation(X, y, model, n_splits=N_SPLITS, seed=RANDOM_SEED,
     seed : int
         Seed to use for splitting, default: constants.RANDOM_SEED
     scale : bool
-        Whether standardize variables, default: True
+        Whether to standardize features, default: True.
+        Automatically set to True when using normalization.
     v_threshold : float
         The variance threshold to apply after normalization, variables
         with a variance below will be removed, default: V_THRESHOLD
+    normalize : bool
+        Whether to normalize the features instead of to standardize them,
+        default: False. 
     path : str
         Path to the directory to store the results in, default: None
     args : argparse.Namespace
@@ -73,9 +79,15 @@ def su_run_evaluation(X, y, model, n_splits=N_SPLITS, seed=RANDOM_SEED,
         Useful for logging. Default: None.
     """
     np.random.seed(args.seed)
-    start_time = datetime.now() 
-    predictions, uncertainties = perform(X, y, model, n_splits=n_splits,
-        seed=seed, scale=scale, v_threshold=v_threshold)
+    start_time = datetime.now()
+    scaler_class = StandardScaler
+    if normalize:
+        scaler_class = Normalizer
+        scale = True
+    predictions, uncertainties = perform(
+        X, y, model, n_splits=n_splits, seed=seed, scale=scale,
+        scaler_class=scaler_class, v_threshold=v_threshold
+    )
     time_elapsed = datetime.now() - start_time
     took = format_time_elapsed(time_elapsed)
     eval_results = evaluate_outcome(predictions, uncertainties, y)
@@ -99,7 +111,7 @@ def su_run_evaluation(X, y, model, n_splits=N_SPLITS, seed=RANDOM_SEED,
 
     
 def perform(X, y, model, n_splits=N_SPLITS, seed=RANDOM_SEED, scale=True,
-        v_threshold=V_THRESHOLD):
+        scaler_class=StandardScaler, v_threshold=V_THRESHOLD):
     """Performs a complete evaluation (each split) and
     accumulates all predictions/uncertainties.
 
@@ -120,6 +132,9 @@ def perform(X, y, model, n_splits=N_SPLITS, seed=RANDOM_SEED, scale=True,
         Seed to use for splitting, default: constants.RANDOM_SEED
     scale : bool
         Whether standardize variables, default: True
+    scaler_class : scaler
+        Scaler initializer, must result in an object that implements .fit(X)
+        and .transform(X), default: sklearn.preprocessing.StandardScaler    
     v_threshold : float
         The variance threshold to apply after normalization, variables
         with a variance below will be removed, default: V_THRESHOLD
@@ -143,7 +158,9 @@ def perform(X, y, model, n_splits=N_SPLITS, seed=RANDOM_SEED, scale=True,
         X_tr, X_te = X.iloc[train_id], X.iloc[test_id]
         y_tr = y.iloc[train_id]
         # Fit and predict
-        preds, uvals = run_split(X_tr, X_te, y_tr, model, scale, v_threshold)
+        preds, uvals = run_split(
+            X_tr, X_te, y_tr, model, scale, scaler_class, v_threshold
+        )
         predictions = pd.concat([predictions, preds], axis=0)
         uncertainties = pd.concat([uncertainties, uvals], axis=0)
     # Get train and test predictive quality
@@ -154,7 +171,8 @@ def perform(X, y, model, n_splits=N_SPLITS, seed=RANDOM_SEED, scale=True,
     return predictions, uncertainties
 
 
-def run_split(X_tr, X_te, y_tr, model, scale=True, v_threshold=V_THRESHOLD):
+def run_split(X_tr, X_te, y_tr, model, scale=True,
+        scaler_class=StandardScaler, v_threshold=V_THRESHOLD):
     """Performs the evaluation of a single split.
 
     Parameters
@@ -170,6 +188,9 @@ def run_split(X_tr, X_te, y_tr, model, scale=True, v_threshold=V_THRESHOLD):
         uq_predict(X), which yields predictions and uncertainty values
     scale : bool
         Whether standardize variables, default: True
+    scaler_class : scaler
+        Scaler initializer, must result in an object that implements .fit(X)
+        and .transform(X), default: sklearn.preprocessing.StandardScaler
     v_threshold : float
         The variance threshold to apply after normalization, variables with
         a variance below will be removed, default: V_THRESHOLD
@@ -180,7 +201,7 @@ def run_split(X_tr, X_te, y_tr, model, scale=True, v_threshold=V_THRESHOLD):
         Table of predictions, table of uncertainties
     """
     # Preprocess
-    saf_result = scale_and_filter(X_tr, X_te,
+    saf_result = scale_and_filter(X_tr, X_te, scaler_class=scaler_class,
         scale=scale, v_threshold=v_threshold)
     X_tr_sc_filt, X_te_sc_filt, _, _ = saf_result
     # Construct model (fit)
@@ -287,6 +308,9 @@ def su_write_report(args, model, predictive_quality, uncertainty_quality,
         f.write(f'model object: {type(model)}\n')
         f.write(f'seed:         {args.seed}\n')
         f.write(f'n_splits:     {args.n_splits}\n')
+        f.write(f'scaling:      {not args.deactivate_scaling}\n')
+        f.write(f'v.threshold:  {args.v_threshold}\n')
+        f.write(f'normalize:    {args.normalize}\n')
         f.write('\n')
         f.write('Data info\n')
         f.write('---------\n')
