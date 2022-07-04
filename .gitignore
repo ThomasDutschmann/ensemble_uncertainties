@@ -17,15 +17,15 @@ eggs/
 # Jupyter notebooks for testing
 test_notebooks/
 
-# Old unorganized notebooks
-preliminary_experiments/
-results_analysis/
-
 # Jupyter notebook checkpoints
 .ipynb_checkpoints
 
 # Plots from publication notebooks
-publication/notebooks/*/plots/
+publication/notebooks/**/plots/
+
+# Old unorganized notebooks
+/preliminary_experiments/
+/results_analysis/
 
 # env and virtual env
 .env
