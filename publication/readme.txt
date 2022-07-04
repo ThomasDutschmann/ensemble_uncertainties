@@ -1,5 +1,5 @@
 
-Files and notebooks involved in "Large-Scale Evaluation of k-Fold Cross-Validation Ensembles".
+Files and notebooks involved in publication.
 
 Disclaimers:
  - What is called "MFC" in the publication was originally called ECFC (extended-connectivity fingerprint counts). As it is the RDKit implementation of Morgan's algorithm and not the original ECFC, it was renamed to MFC for the publication.
