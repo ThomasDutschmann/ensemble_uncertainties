@@ -17,12 +17,15 @@ eggs/
 # Jupyter notebooks for testing
 test_notebooks/
 
-# Old or hidden notebooks
+# Old unorganized notebooks
 preliminary_experiments/
 results_analysis/
 
 # Jupyter notebook checkpoints
 .ipynb_checkpoints
+
+# Plots from publication notebooks
+publication/notebooks/*/plots/
 
 # env and virtual env
 .env
@@ -36,5 +39,5 @@ ENV/
 # VScode
 .vscode
 
-# Results
+# Test results
 test_results/
