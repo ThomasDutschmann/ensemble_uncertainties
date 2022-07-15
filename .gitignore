@@ -22,6 +22,7 @@ test_notebooks/
 
 # Plots from publication notebooks
 publication/notebooks/**/plots/
+/publication/notebooks/**/_*
 
 # Old unorganized notebooks
 /preliminary_experiments/
