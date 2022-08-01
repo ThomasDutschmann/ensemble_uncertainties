@@ -21,7 +21,7 @@ Anaconda and Git should be installed. If not, check out [Anaconda's website](htt
 
 1. Clone repository:
 ```console
-git clone https://git.rz.tu-bs.de/institut-f-r-medizinische-und-pharmazeutische-chemie/akb/ensemble_uncertainties.git
+git clone https://git.rz.tu-bs.de/impc/baumannlab/ensemble_uncertainties.git
 ```
 
 2. Change directory:
