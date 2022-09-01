@@ -4,10 +4,12 @@ channels:
 dependencies:
   - python
   - pip
+  - jupyterlab
+  - matplotlib
   - numpy
   - pandas
   - scikit-learn
-  - tqdm
-  - matplotlib
-  - xgboost
+  - seaborn
   - tensorflow>=2.8.1
+  - tqdm
+  - xgboost
