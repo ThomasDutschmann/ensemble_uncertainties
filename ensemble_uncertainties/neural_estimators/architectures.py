@@ -9,12 +9,12 @@ def deep_architecture(output_activation):
     """Our default deep architecture for property prediction:
 
     in | 256 ReLU | 128 ReLU | 16 ReLU | 1 
-        
+
     Parameters
     ----------
     output_activation : str
         Name of the activation in the final neuron (tf.keras.activations)
-            
+
     Returns
     -------
     function
@@ -35,12 +35,12 @@ def deep_architecture_dropout(dropout_rate=0.2):
     """Our default deep architecture for regression, with dropout:
 
     in | 256 ReLU | Dropout | 128 ReLU | Dropout | 16 ReLU | Dropout | 1
-            
+
     Parameters
     ----------
     dropout_rate : float \in [0, 1]
         Fraction of dropped out weights, default: 0.2
-                
+
     Returns
     -------
     function
@@ -69,12 +69,12 @@ def deep_architecture_mc_dropout(dropout_rate=0.2):
     the setting 'training=True' to perform MC dropout during inference.
 
     in | 256 ReLU | Dropout | 128 ReLU | Dropout | 16 ReLU | Dropout | 1
-            
+
     Parameters
     ----------
     dropout_rate : float \in [0, 1]
         Fraction of dropped out weights, default: 0.2
-                
+
     Returns
     -------
     function
@@ -102,12 +102,12 @@ def shallow_architecture(output_activation):
     """Our default shallow architecture for property prediction:
 
     in | 128 ReLU | 1 
-        
+
     Parameters
     ----------
     output_activation : str
         Name of the activation in the final neuron (tf.keras.activations)
-            
+
     Returns
     -------
     function
