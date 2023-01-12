@@ -7,18 +7,13 @@ python executable.py -x X.csv -y y.csv -r 10 -t regression -m SVM -v
                      -o results/
 """
 
-import pandas as pd
-
 from ensemble_uncertainties.argparser import parser
 
-from ensemble_uncertainties.automatize import run_evaluation
+from ensemble_uncertainties.automatize import load_data, run_evaluation
 
 from ensemble_uncertainties.error_handling import (
-    file_availability,
-    file_compatibility,
     model_availability,
-    writing_accessibility,
-    y_file_compatibility
+    writing_accessibility
 )
 
 from ensemble_uncertainties.model_library import models
@@ -85,31 +80,6 @@ def main():
         store_all=args.store_all,
         args=args
     )
-
-
-def load_data(X_path, y_path):
-    """Checks if file paths and file content are ok. If so, load X and y.
-
-    Parameters
-    ----------
-    X_path : str
-        Path to the CSV-file of the independent variables
-    y_path : str
-        Path to the CSV-file of the dependent variables
-
-    Returns
-    -------
-    DataFrame, DataFrame
-        X and y
-    """
-    file_availability(X_path)
-    file_compatibility(X_path)
-    file_availability(y_path)
-    file_compatibility(y_path)
-    y_file_compatibility(y_path)
-    X = pd.read_csv(X_path, sep=';').set_index('id')
-    y = pd.read_csv(y_path, sep=';').set_index('id')
-    return X, y
 
 
 def parse_model(task, model_name):
