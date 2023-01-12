@@ -12,7 +12,7 @@ from ensemble_uncertainties.constants import (
     RANDOM_SEED,
     V_THRESHOLD
 )
-from ensemble_uncertainties.neural_estimators.neural_estimator import (
+from ensemble_uncertainties.neural_networks.nn_models import (
     DeepMCDropoutRegressor
 )
 

@@ -1,7 +1,7 @@
 
 """Collection of machine learning methods to apply."""
 
-from ensemble_uncertainties.neural_estimators.neural_estimator import (
+from ensemble_uncertainties.neural_networks.nn_models import (
     DeepNeuralClassifier,
     DeepNeuralRegressor,
     DeepDropoutRegressor,
@@ -31,7 +31,7 @@ models['classification']['rf'] = RandomForestClassifier()
 models['classification']['dt'] = DecisionTreeClassifier()
 models['classification']['svm_rbf'] = SVC(kernel='rbf')
 models['classification']['svm_tanimoto'] = SVC(kernel=tanimoto)
-models['classification']['xgb'] = XGBClassifier(use_label_encoder=False)
+models['classification']['xgb'] = XGBClassifier()
 models['classification']['deep'] = DeepNeuralClassifier()
 models['classification']['shallow'] = ShallowNeuralClassifier()
 
