@@ -8,7 +8,7 @@ import numpy as np
 
 import tensorflow as tf
 
-from ensemble_uncertainties.neural_estimators.architectures import (
+from ensemble_uncertainties.neural_networks.architectures import (
     deep_architecture,
     deep_architecture_dropout,
     deep_architecture_mc_dropout,
@@ -22,7 +22,8 @@ from ensemble_uncertainties.constants import (
     RANDOM_SEED
 )
 
-# Turn off learning monitoring
+
+# Turn off logging
 logging.getLogger('tensorflow').setLevel(logging.FATAL)
 # Make deterministic
 os.environ['TF_DETERMINISTIC_OPS'] = '1'
@@ -33,7 +34,7 @@ if len(gpus) > 0:
     tf.config.experimental.set_memory_growth(gpus[0], MEMORY_GROWTH)
 
 
-class NeuralEstimator:
+class NeuralNetwork:
     """ Wrapper class for TensorFlow feed forward estimators to
     dynamically exchange architectures and to overcome
     incompatibilities with scikit-learn models.
@@ -99,7 +100,7 @@ class NeuralEstimator:
         np.array
             Predictions
         """
-        predictions = self.model.predict(X)
+        predictions = self.model.predict(X, verbose=0)
         return predictions
 
     def save(self, path):
@@ -113,10 +114,10 @@ class NeuralEstimator:
         self.model.save(path)
 
 
-class DeepNeuralClassifier(NeuralEstimator):
+class DeepNeuralClassifier(NeuralNetwork):
     """Deep classification-specific extension, based on:"""
 
-    __doc__ += NeuralEstimator.__doc__
+    __doc__ += NeuralNetwork.__doc__
 
     def __init__(self, epochs=EPOCHS, batch_size=BATCH_SIZE):
         super().__init__(
@@ -128,10 +129,10 @@ class DeepNeuralClassifier(NeuralEstimator):
         )
 
 
-class DeepNeuralRegressor(NeuralEstimator):
+class DeepNeuralRegressor(NeuralNetwork):
     """Deep regression-specific extension, based on:"""
 
-    __doc__ += NeuralEstimator.__doc__
+    __doc__ += NeuralNetwork.__doc__
 
     def __init__(self, epochs=EPOCHS, batch_size=BATCH_SIZE):
         super().__init__(
@@ -143,10 +144,10 @@ class DeepNeuralRegressor(NeuralEstimator):
         )
 
 
-class ShallowNeuralClassifier(NeuralEstimator):
+class ShallowNeuralClassifier(NeuralNetwork):
     """Shallow classification-specific extension, based on:"""
 
-    __doc__ += NeuralEstimator.__doc__
+    __doc__ += NeuralNetwork.__doc__
 
     def __init__(self, epochs=EPOCHS, batch_size=BATCH_SIZE):
         super().__init__(
@@ -158,10 +159,10 @@ class ShallowNeuralClassifier(NeuralEstimator):
         )
 
 
-class ShallowNeuralRegressor(NeuralEstimator):
+class ShallowNeuralRegressor(NeuralNetwork):
     """Shallow regression-specific extension, based on:"""
 
-    __doc__ += NeuralEstimator.__doc__
+    __doc__ += NeuralNetwork.__doc__
 
     def __init__(self, epochs=EPOCHS, batch_size=BATCH_SIZE):
         super().__init__(
@@ -173,10 +174,10 @@ class ShallowNeuralRegressor(NeuralEstimator):
         )
 
 
-class DeepDropoutRegressor(NeuralEstimator):
+class DeepDropoutRegressor(NeuralNetwork):
     """Regression-specific extension with dropout, based on:"""
 
-    __doc__ += NeuralEstimator.__doc__
+    __doc__ += NeuralNetwork.__doc__
 
     def __init__(self, epochs=1000, batch_size=BATCH_SIZE, dropout_rate=0.2):
         super().__init__(
@@ -191,10 +192,10 @@ class DeepDropoutRegressor(NeuralEstimator):
         )
 
 
-class DeepMCDropoutRegressor(NeuralEstimator):
+class DeepMCDropoutRegressor(NeuralNetwork):
     """Regression-specific extension for MC dropout, based on:"""
 
-    __doc__ += NeuralEstimator.__doc__
+    __doc__ += NeuralNetwork.__doc__
 
     def __init__(self, epochs=1000, batch_size=BATCH_SIZE, dropout_rate=0.2,
             n_pred=100):
@@ -209,7 +210,6 @@ class DeepMCDropoutRegressor(NeuralEstimator):
             batch_size=batch_size
         )
         self.n_pred = n_pred
-
 
     def mc_predict(self, X):
         """Predicts with MC dropout, averages single per-object
