@@ -71,19 +71,9 @@ Note: It is important that the CSV-files are semicolon-separated, have a header,
 Parts of the framework can also be used inside Python to conveniently estimate prediction uncertainties. Consider the provided example script below. Again, be reminded that external files need to provide the required format described above. Otherwise, they have to be converted.
 
 ```python
-# Run inside ensemble_uncertainties/
+# Run inside ensemble_uncertainties/ for the folder paths to work
 
-import pandas as pd
-
-from ensemble_uncertainties.automatize import (
-    compute_uq_qualities
-)
-from ensemble_uncertainties.evaluators.regression_evaluator import (
-    RegressionEvaluator
-)
-from ensemble_uncertainties.executable import (
-    load_data
-)
+import ensemble_uncertainties as eu
 
 from sklearn.svm import SVR
 
@@ -91,10 +81,10 @@ from sklearn.svm import SVR
 # Load data
 tetrah_rdkit_path = 'test_data/tetrahymena/tetrah_rdkit.csv'
 tetrah_y_path = 'test_data/tetrahymena/tetrah_y.csv'
-X, y = load_data(tetrah_rdkit_path, tetrah_y_path)
+X, y = eu.load_data(tetrah_rdkit_path, tetrah_y_path)
 
 # Set evaluator using some custom settings
-svr_evaluator = RegressionEvaluator(
+svr_evaluator = eu.RegressionEvaluator(
     SVR(),
     repetitions=5,
     n_splits=5,
@@ -106,10 +96,16 @@ svr_evaluator.perform(X, y)
 
 # Inspect results
 pred_quality = svr_evaluator.test_ensemble_quality
-auco, rho = compute_uq_qualities(svr_evaluator)
+auco, rho = eu.compute_uq_qualities(svr_evaluator)
 print(f'R^2:             {pred_quality:.3f}')
 print(f'AUCO:            {auco:.3f}')
 print(f"Spearman's rho:  {rho:.3f}")
+
+
+# Expected output:
+# R^2:             0.829
+# AUCO:            17.464
+# Spearman's rho:  0.345
 ```
 
 
