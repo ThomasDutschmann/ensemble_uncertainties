@@ -66,6 +66,47 @@ def plot_r2(y, tr_preds, te_preds, path='', show=False):
         plt.show()
 
 
+
+def plot_r2_test(y, te_preds, path='', show=False):
+    """Plots observed vs. predicted scatter plot
+    for a set of test predictions.
+
+    Parameters
+    ----------
+    y : Series
+        True values
+    te_preds : Series
+        Test predictions
+    path : str
+        Path of the file to store the plot, default: '' (no storing)
+    show : bool
+        If True, plt.show() will be called, default: False
+    """
+    # Compute scores
+    te_r2 = r2_score(y, te_preds)
+    # Get corner values of the outputs/predictions
+    smallest = min(min(y), min(te_preds.values))
+    biggest = max(max(y), max(te_preds.values))
+    # Plot
+    plt.figure(figsize=(5, 5))
+    plt.grid(zorder=1000)
+    plt.plot(y, te_preds, 'o', zorder=100, markersize=4, label=None,
+        color=DEF_COLOR, mfc='none', alpha=.7)
+    plt.scatter([], [], label=f'Test,  $R^2$: {te_r2:.3f}',
+        color=DEF_COLOR, facecolor='none')
+    plt.plot([smallest-.2, biggest+.2], [smallest-.2, biggest+.2], zorder=100,
+        color='k', label='$\hat{y}$ = $y$')
+    plt.xlim(smallest-.2, biggest+.2)
+    plt.ylim(smallest-.2, biggest+.2)
+    plt.xlabel('$y$')
+    plt.ylabel('$\hat{y}$')
+    plt.legend()
+    if path:
+        plt.savefig(f'{path}r2.png', bbox_inches='tight', pad_inches=0.01)
+    if show:
+        plt.show()
+
+
 def plot_confidence(resids, uncertainties,
         frac=1.0, text=None, path='', show=False):
     """Plots confidence curve.
