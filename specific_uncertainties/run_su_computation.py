@@ -7,7 +7,7 @@ from su_automatize import su_run_evaluation
 from su_argparser import parser
 
 from ensemble_uncertainties.error_handling import writing_accessibility
-from ensemble_uncertainties.executable import load_data
+from ensemble_uncertainties.run_ensembling import load_data
 
 
 def main():
