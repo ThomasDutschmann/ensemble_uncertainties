@@ -12,7 +12,7 @@ from ensemble_uncertainties.constants import (
 
 
 parser = argparse.ArgumentParser(
-    prog='ensemble_uncertainties/ensemble_uncertainties/executable',
+    prog='ensemble_uncertainties/ensemble_uncertainties/run_ensembling',
     description='Application to evaluate k-fold ensemble uncertainties.'
 )
 
