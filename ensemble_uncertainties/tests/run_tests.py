@@ -16,7 +16,7 @@ from ensemble_uncertainties.automatize import run_evaluation
 from ensemble_uncertainties.evaluators.regression_evaluator import (
     RegressionEvaluator
 )
-from ensemble_uncertainties.executable import load_data, parse_model
+from ensemble_uncertainties.run_ensembling import load_data, parse_model
 
 
 class ExecutableTests(unittest.TestCase):
