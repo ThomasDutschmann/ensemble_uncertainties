@@ -14,9 +14,9 @@ from copy import deepcopy
 
 from datetime import datetime
 
-from ensemble_uncertainties.automatize import make_folder
+from ensemble_uncertainties.automatize import extend_path, make_folder
+from ensemble_uncertainties.utils.ad_assessment import compute_uq_qualities
 from ensemble_uncertainties.constants import (
-    DEF_COLOR,
     DPI,
     N_SPLITS,
     RANDOM_SEED,
@@ -26,13 +26,12 @@ from ensemble_uncertainties.evaluators.evaluator_support import (
     scale_and_filter,
     format_time_elapsed
 )
-from ensemble_uncertainties.utils.ad_assessment import spearman_coeff
 from ensemble_uncertainties.utils.plotting import (
     plot_scatter,
-    plot_confidence
+    plot_confidence,
+    plot_r2_test
 )
 
-from sklearn.metrics import r2_score
 from sklearn.model_selection import KFold
 from sklearn.preprocessing import Normalizer, StandardScaler
 
@@ -90,10 +89,13 @@ def su_run_evaluation(X, y, model, n_splits=N_SPLITS, seed=RANDOM_SEED,
     )
     time_elapsed = datetime.now() - start_time
     took = format_time_elapsed(time_elapsed)
-    eval_results = evaluate_outcome(predictions, uncertainties, y)
+    eval_results = compute_uq_qualities(
+        predictions['pred'].values,
+        uncertainties['uq'].values,
+        y['y'].values
+    )
     results, predictive_quality, uncertainty_quality = eval_results
-    if not path.endswith('/'):
-        path += '/'
+    path = extend_path(path)
     make_folder(path)
     results.to_csv(f'{path}results.csv', sep=';')
     plots_path = f'{path}plots/'
@@ -212,74 +214,6 @@ def run_split(X_tr, X_te, y_tr, model, scale=True,
     preds = pd.DataFrame(means, index=X_te.index)
     uvals = pd.DataFrame(sdevs, index=X_te.index)
     return preds, uvals
-
-
-def evaluate_outcome(predictions, uncertainties, y):
-    """Assigns performances and summarizes predictions/uncertainties.
-
-    Parameters
-    ----------
-    predictions : DataFrame
-        Predicted outputs
-    uncertainties : DataFrame
-        UQ values
-    y : DataFrame
-        Observed outputs
-
-    Returns
-    -------
-    DataFrame, float, float
-        Table of result, predictive quality, uncertainty quality
-    """
-    results = pd.DataFrame(index=y.index)
-    # Compute final predictions by average
-    results['predicted'] = predictions['pred']
-    # Compute sdev of ensemble predictions by output distribution
-    results['uq'] = uncertainties['uq']
-    results['resid'] = y['y'] - results['predicted']
-    predictive_quality = r2_score(y['y'], results['predicted'])
-    uncertainty_quality =  spearman_coeff(results['resid'], results['uq'])
-    return results, predictive_quality, uncertainty_quality
-
-
-def plot_r2_test(y, te_preds, path='', show=False):
-    """Plots observed vs. predicted scatter plot
-    for a set of test predictions.
-
-    Parameters
-    ----------
-    y : Series
-        True values
-    te_preds : Series
-        Test predictions
-    path : str
-        Path of the file to store the plot, default: '' (no storing)
-    show : bool
-        If True, plt.show() will be called, default: False
-    """
-    # Compute scores
-    te_r2 = r2_score(y, te_preds)
-    # Get corner values of the outputs/predictions
-    smallest = min(min(y), min(te_preds.values))
-    biggest = max(max(y), max(te_preds.values))
-    # Plot
-    plt.figure(figsize=(5, 5))
-    plt.grid(zorder=1000)
-    plt.plot(y, te_preds, 'o', zorder=100, markersize=4, label=None,
-        color=DEF_COLOR, mfc='none', alpha=.7)
-    plt.scatter([], [], label=f'Test,  $R^2$: {te_r2:.3f}',
-        color=DEF_COLOR, facecolor='none')
-    plt.plot([smallest-.2, biggest+.2], [smallest-.2, biggest+.2], zorder=100,
-        color='k', label='$\hat{y}$ = $y$')
-    plt.xlim(smallest-.2, biggest+.2)
-    plt.ylim(smallest-.2, biggest+.2)
-    plt.xlabel('$y$')
-    plt.ylabel('$\hat{y}$')
-    plt.legend()
-    if path:
-        plt.savefig(f'{path}r2.png', bbox_inches='tight', pad_inches=0.01)
-    if show:
-        plt.show()
 
 
 def su_write_report(args, model, predictive_quality, uncertainty_quality,
