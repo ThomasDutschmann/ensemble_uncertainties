@@ -47,18 +47,18 @@ pip install -e .
 ```
 
 # How To Use
-## Running the executable
+## Running the main executable
 
 The executable provides helpful information of all the (necessary) command line arguments:
 
 ```console
-python ensemble_uncertainties/executable.py -h
+python ensemble_uncertainties/run_ensembling.py -h
 ```
 
 For example, if you want to evaluate support vector regression on the provided Tetrahymena toxicity data set<sup>[4]</sup> (first 100 entries, featurized by RDKit descriptors) with 5 repetitions and a 5-fold, storing the output in my_test_results_folder/, you run the executable like so:
 
 ```console
-python ensemble_uncertainties/executable.py -r 5 -n 5 -x test_data/tetrahymena/tetrah_rdkit.csv -y test_data/tetrahymena/tetrah_y.csv -m svm_rbf -t regression -o my_test_results_folder/ -v
+python ensemble_uncertainties/run_ensembling.py -r 5 -n 5 -x test_data/tetrahymena/tetrah_rdkit.csv -y test_data/tetrahymena/tetrah_y.csv -m svm_rbf -t regression -o my_test_results_folder/ -v
 ```
 
 To test the classification case, the first 100 entries of the CYP1A2 dataset from the applicability domain study by Klingspohn et al. is provided.<sup>[5]</sup>
