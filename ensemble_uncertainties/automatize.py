@@ -154,8 +154,7 @@ def run_evaluation(model, task, X, y, verbose=True, repetitions=N_REPS,
     # Store input space transformers, models, and single repetition
     # predictions, if desired (i.e., if results path is given)
     if path:
-        if not path.endswith('/'):
-            path += '/'
+        path = extend_path(path)
         plots_to_file(evaluator, task, path)
         results_tables_to_file(evaluator, path)
         write_report(args, evaluator)
@@ -164,6 +163,25 @@ def run_evaluation(model, task, X, y, verbose=True, repetitions=N_REPS,
             models_to_file(evaluator, path)
     if follow_up:
         follow_up(evaluator)
+
+
+def extend_path(path):
+    """Extends paths by '/' if necessary.
+
+    Parameters
+    ----------
+    path : str
+        Path to extend
+
+    Returns
+    -------
+    str
+        Extended path
+    """
+    if path.endswith('/'):
+        return path 
+    else:
+        return path + '/'    
 
 
 def make_folder(path):
@@ -242,11 +260,13 @@ def transformers_to_file(evaluator, path):
 
 
 def models_to_file(evaluator, path):
-    """Stores fitted estimators as pickle files,
-    or H5-files for TensorFlow wrappers.
+    """Stores fitted estimators default as pickle files, or
+    H5-files for TensorFlow wrappers, or json-files for XGBoost models.
 
     Parameters
     ----------
+    args : argparse.Namespace
+        Parsed arguments from an argument parser.
     evaluator : Evaluator
         Applied evaluator 
     path : str
@@ -262,10 +282,12 @@ def models_to_file(evaluator, path):
             mpath = f'{models_path}model_{rep_i}_{fold_i}'
             model = evaluator.models[rep_i][fold_i]
             # Store deep estimator
-            if 'neural_estimators.neural_estimator.' in str(type(model)) or \
-                'keras.engine.sequential.Sequential' in str(type(model)):
+            if 'save' in dir(model):
                 model.save(f'{mpath}.h5')
-            # Store scikit-learn model
+            # Store XGB model
+            elif 'save_model' in dir(model):
+                model.save_model(f'{mpath}.txt')
+            # Store any other model
             else:
                 pickle.dump(model, open(f'{mpath}.p', 'wb'))
 
@@ -294,8 +316,8 @@ def results_tables_to_file(evaluator, path):
     evaluator.test_ensemble_preds.to_csv(f'{epath}test.csv', sep=';')
 
 
-def compute_uq_qualities(evaluator):
-    """Computes raw AUCO and Spearman's coefficient.
+def compute_uq_qualities_from_evaluator(evaluator):
+    """Computes raw AUCO and Spearman's coefficient for a given evaluator.
     
     Parameters
     ----------
@@ -359,7 +381,7 @@ def write_report(args, evaluator):
         f.write(f'Train {metric_name}:       {train_quality:.3f}\n')
         f.write(f'Test {metric_name}:        {test_quality:.3f}\n')
         if args.task == 'regression':
-            area, rho = compute_uq_qualities(evaluator)
+            area, rho = compute_uq_qualities_from_evaluator(evaluator)
             f.write(f'AUCO:           {area:.3f}\n')
             f.write(f"Spearman's rho:  {rho:.3f}\n")
         f.write(f'Overall runtime: {formatted_runtime}\n')
