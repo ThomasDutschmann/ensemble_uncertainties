@@ -8,7 +8,7 @@ import pandas as pd
 
 from scipy.stats import spearmanr
 
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, r2_score
 
 
 def rmses_frac(resids, uncertainties, frac=1.0):
@@ -98,6 +98,34 @@ def spearman_coeff(resids, uncertainties):
     """
     coeff = spearmanr(resids.abs(), uncertainties)[0]
     return coeff
+
+
+def compute_uq_qualities(predictions, uncertainties, y):
+    """Assigns performances and summarizes predictions/uncertainties.
+
+    Parameters
+    ----------
+    predictions : 1D Numpy Array
+        Predicted outputs
+    uncertainties : 1D Numpy Array
+        UQ values
+    y : 1D Numpy Array
+        Observed outputs
+
+    Returns
+    -------
+    DataFrame, float, float
+        Table of result, predictive quality, uncertainty quality
+    """
+    results = pd.DataFrame()
+    # Compute final predictions by average
+    results['predicted'] = predictions
+    # Compute sdev of ensemble predictions by output distribution
+    results['uq'] = uncertainties
+    results['resid'] = y - predictions
+    predictive_quality = r2_score(y, predictions)
+    uncertainty_quality =  spearman_coeff(results['resid'], results['uq'])
+    return results, predictive_quality, uncertainty_quality
 
 
 def cumulative_accuracy(y, predicted, probabilities, start_frac=.05):
