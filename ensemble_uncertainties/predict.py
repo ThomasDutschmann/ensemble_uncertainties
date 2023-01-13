@@ -1,5 +1,8 @@
 
-"""Predicts the outputs for a test set using an ensemble."""
+"""
+Predicts the outputs for a test set using an ensemble.
+Currently only supports regression!
+"""
 
 import os
 import pickle
