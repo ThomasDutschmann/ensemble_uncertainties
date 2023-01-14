@@ -14,7 +14,7 @@ parser.add_argument(
     '--independent',
     dest='X_path',
     type=str,
-    help='path to file of dependent variables (X) of the test set',
+    help='path to file of independent variables (X) of the test set',
     required=True,
     default=None
 )
@@ -24,7 +24,7 @@ parser.add_argument(
     '--dependent',
     dest='y_path',
     type=str,
-    help='path to file of independent variables (y) of the test set',
+    help='path to file of dependent variables (y) of the test set',
     required=True,
     default=None
 )

@@ -45,10 +45,10 @@ def main():
     optional arguments:
     -h, --help            show this help message and exit
     -x X_PATH, --independent X_PATH
-                            path to file of dependent
+                            path to file of independent
                             variables(X) of the test set
     -y Y_PATH, --dependent Y_PATH
-                            path to file of independent
+                            path to file of dependent
                             variables (y) of the test set
     -i INPUT_PATH, --input INPUT_PATH
                             path to the folder where the

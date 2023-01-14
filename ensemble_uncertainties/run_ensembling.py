@@ -34,9 +34,9 @@ def main():
     -n N_SPLITS, --n_splits N_SPLITS
                             number of splits, default: 2
     -x X_PATH, --independent X_PATH
-                            path to file of dependent variables (X)
+                            path to file of independent variables (X)
     -y Y_PATH, --dependent Y_PATH
-                            path to file of independent variables (y)
+                            path to file of dependent variables (y)
     -o OUTPUT_PATH, --output OUTPUT_PATH
                             path to the folder where the results are stored
     -m MODEL_NAME, --model MODEL_NAME
