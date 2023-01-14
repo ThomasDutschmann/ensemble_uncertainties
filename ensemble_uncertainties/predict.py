@@ -292,7 +292,7 @@ def predict_write_report(args, predictive_quality, uncertainty_quality,
     took : str
         Formatted string describing the elapsed time
     """
-    path = args.output_path
+    path = extend_path(args.output_path)
     with open(f'{path}report.txt', 'w') as f:
         f.write(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")}\n\n')
         f.write('Settings\n')
