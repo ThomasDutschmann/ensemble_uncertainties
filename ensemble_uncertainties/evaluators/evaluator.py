@@ -11,17 +11,16 @@ import pandas as pd
 
 from abc import abstractmethod
 
+from copy import deepcopy
+
+from datetime import datetime
+
 from ensemble_uncertainties.constants import (
     N_REPS,
     N_SPLITS,
     RANDOM_SEED,
     V_THRESHOLD
 )
-
-from copy import deepcopy
-
-from datetime import datetime
-
 from ensemble_uncertainties.evaluators.evaluator_support import (
     bootstrap,
     format_time_elapsed,

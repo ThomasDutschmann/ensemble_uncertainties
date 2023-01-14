@@ -9,7 +9,6 @@ from ensemble_uncertainties.neural_networks.nn_models import (
     ShallowNeuralClassifier,
     ShallowNeuralRegressor
 )
-
 from ensemble_uncertainties.utils.kernel_functions import tanimoto
 
 from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor

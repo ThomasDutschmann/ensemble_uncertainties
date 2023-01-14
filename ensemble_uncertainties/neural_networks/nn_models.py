@@ -14,7 +14,6 @@ from ensemble_uncertainties.neural_networks.architectures import (
     deep_architecture_mc_dropout,
     shallow_architecture
 )
-
 from ensemble_uncertainties.constants import (
     BATCH_SIZE,
     EPOCHS,

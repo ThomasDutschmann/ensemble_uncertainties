@@ -10,7 +10,6 @@ from ensemble_uncertainties.utils.ad_assessment import (
     rmses_frac,
     cumulative_accuracy
 )
-
 from ensemble_uncertainties.constants import DPI, DEF_COLOR
 
 from sklearn.metrics import r2_score, roc_curve

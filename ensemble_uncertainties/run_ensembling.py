@@ -7,16 +7,13 @@ python executable.py -x X.csv -y y.csv -r 10 -t regression -m SVM -v
                      -o results/
 """
 
-from ensemble_uncertainties.run_ensembling_argparser import parser
-
 from ensemble_uncertainties.automatize import load_data, run_evaluation
-
 from ensemble_uncertainties.error_handling import (
     model_availability,
     writing_accessibility
 )
-
 from ensemble_uncertainties.model_library import models
+from ensemble_uncertainties.run_ensembling_argparser import parser
 
 
 def main():

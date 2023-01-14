@@ -9,7 +9,6 @@ from ensemble_uncertainties.constants import (
     RANDOM_SEED,
     V_THRESHOLD
 )
-
 from ensemble_uncertainties.evaluators.evaluator import Evaluator
 
 from sklearn.metrics import r2_score
