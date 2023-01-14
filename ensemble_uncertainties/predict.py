@@ -56,7 +56,7 @@ def main():
     -o OUTPUT_PATH, --output OUTPUT_PATH
                             path to the folder where the results are stored
     -m MODEL_FORMAT, --model_format MODEL_FORMAT
-                            "network" (for H5)/"xgboost:c"/"xgboost:r",
+                            "network" (for TF-models), "xgb:c", "xgb:r",
                             default: "pickle"
     """
     args = parser.parse_args()

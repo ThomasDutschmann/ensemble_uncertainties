@@ -54,7 +54,7 @@ parser.add_argument(
     '--model_format',
     dest='model_format',
     type=str,
-    help='"network" (for H5)/"xgboost:c"/"xgboost:r", default: "pickle"',
+    help='"network" (for TF-models), "xgb:c", "xgb:r", default: "pickle"',
     required=True,
     default=None
 ) 
