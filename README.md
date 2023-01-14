@@ -96,7 +96,7 @@ svr_evaluator.perform(X, y)
 
 # Inspect results
 pred_quality = svr_evaluator.test_ensemble_quality
-auco, rho = eu.compute_uq_qualities(svr_evaluator)
+auco, rho = eu.compute_auco_and_rho(svr_evaluator)
 print(f'R^2:             {pred_quality:.3f}')
 print(f'AUCO:            {auco:.3f}')
 print(f"Spearman's rho:  {rho:.3f}")

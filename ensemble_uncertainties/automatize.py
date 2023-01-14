@@ -17,31 +17,25 @@ from ensemble_uncertainties.constants import (
     RANDOM_SEED,
     V_THRESHOLD
 )
-
 from ensemble_uncertainties.error_handling import (
     file_availability,
     file_compatibility,
     y_file_compatibility
 )
-
 from ensemble_uncertainties.evaluators.classification_evaluator import (
     ClassificationEvaluator
 )
-
 from ensemble_uncertainties.evaluators.evaluator_support import (
     format_time_elapsed
 )
-
 from ensemble_uncertainties.evaluators.regression_evaluator import (
     RegressionEvaluator
 )
-
 from ensemble_uncertainties.utils.ad_assessment import (
     auco,
     rmses_frac,
     spearman_coeff
 )
-
 from ensemble_uncertainties.utils.plotting import (
     plot_r2,
     plot_confidence,
@@ -316,7 +310,7 @@ def results_tables_to_file(evaluator, path):
     evaluator.test_ensemble_preds.to_csv(f'{epath}test.csv', sep=';')
 
 
-def compute_uq_qualities_from_evaluator(evaluator):
+def compute_auco_and_rho(evaluator):
     """Computes raw AUCO and Spearman's coefficient for a given evaluator.
     
     Parameters
@@ -381,7 +375,7 @@ def write_report(args, evaluator):
         f.write(f'Train {metric_name}:       {train_quality:.3f}\n')
         f.write(f'Test {metric_name}:        {test_quality:.3f}\n')
         if args.task == 'regression':
-            area, rho = compute_uq_qualities_from_evaluator(evaluator)
+            area, rho = compute_auco_and_rho(evaluator)
             f.write(f'AUCO:           {area:.3f}\n')
             f.write(f"Spearman's rho:  {rho:.3f}\n")
         f.write(f'Overall runtime: {formatted_runtime}\n')
