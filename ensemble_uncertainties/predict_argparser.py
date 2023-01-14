@@ -6,7 +6,7 @@ import argparse
 
 parser = argparse.ArgumentParser(
     prog='ensemble_uncertainties/ensemble_uncertainties/predict',
-    description='Application to predict the outputs for a test set using an ensemble.'
+    description='Application to predict test outputs by an ensemble.'
 )
 
 parser.add_argument(
