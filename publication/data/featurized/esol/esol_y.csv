@@ -54,7 +54,7 @@ id;y
 1,5-Dimethlnapthalene;-4.679
 1,5-Hexadiene ;-2.68
 1,7-phenantroline;-2.68
-1,8-Cineole;-1.74
+1,8-Cineole;-1.69
 17a-Methyltestosterone;-3.999
 1-aminoacridine;-4.22
 1-Bromo-2-methylpropane;-2.43
@@ -150,8 +150,7 @@ id;y
 2,3',4',5-PCB;-7.25
 2,3,4,5-Tetrachlorophenol;-3.15
 2,3,4,6-Tetrachlorophenol;-3.1
-2',3,4-PCB;-6.29
-2,3,4'-PCB;-6.26
+2',3,4-PCB;-6.275
 2,3,4-Trichlorophenol;-2.67
 2,3,4-Trimethylpentane;-4.8
 2,3,5,6-Tetrachlorophenol;-3.37
@@ -165,8 +164,7 @@ id;y
 2,3-Dimethylnaphthalene;-4.72
 2,3-Dimethylpentane;-4.28
 2,3-Dimethylpyridine;0.38
-2,4,5-PCB;-6.27
-2,4',5-PCB;-6.25
+2,4,5-PCB;-6.26
 2,4,5-Trichlorophenol ;-2.21
 2,4,6-PCB;-6.14
 2,4,6-Trichlorophenol;-2.34
@@ -180,8 +178,7 @@ id;y
 2,4-Dimethylphenol;-1.19
 2,4-Dimethylpyridine;0.38
 2,4-Dinitrotoluene;-2.82
-2,4'-PCB;-5.28
-2,4-PCB;-5.25
+2,4'-PCB;-5.265000000000001
 2,6-Dichlorophenol;-1.79
 2,6-Dimethylnaphthalene ;-4.89
 2,6-Dimethylphenol;-1.29
@@ -191,7 +188,6 @@ id;y
 2,7-dimethylquinoline;-1.94
 2-aminoanthracene;-5.17
 2-bromonaphthalene;-4.4
-2-Bromonapthalene;-4.4
 2-Bromopropane;-1.59
 2-Bromotoluene;-2.23
 2-Butanone;0.52
@@ -287,7 +283,7 @@ id;y
 3-Methyl-1-Butene;-2.73
 3-Methyl-2-butanol;-0.18
 3-Methyl-2-butanone;-0.12
-3-Methyl-2-pentanol;-0.72
+3-Methyl-2-pentanol;-0.715
 3-Methyl-2-pentanone;-0.67
 3-Methyl-3-heptanol;-1.6
 3-Methyl-3-hexanol;-0.98
@@ -335,8 +331,8 @@ id;y
 5-Allyl-5-isopropylbarbital;-1.708
 5-Allyl-5-methylbarbital;-1.16
 5-Allyl-5-phenylbarbital;-2.369
-5-Ethyl-5-(3-methylbutyl)barbital;-2.658
-5-Ethyl-5-isopropylbarbituric acid;-2.148
+5-Ethyl-5-(3-methylbutyl)barbital;-2.563
+5-Ethyl-5-isopropylbarbituric acid;-2.1790000000000003
 5-Ethyl-5-phenylbarbital;-2.322
 5-fluorouracil;-1.077
 5-hydroxyquinoline;-2.54
@@ -386,11 +382,10 @@ aminopyrine;-0.364
 aminothiazole;-0.36
 Amitraz;-5.47
 Amitrole;0.522
-Amobarbital;-2.468
 ampyrone;-0.624
 Ancymidol;-2.596
 Androstenedione;-3.69
-Androsterone;-4.402
+Androsterone;-4.281000000000001
 Anethole;-3.13
 Aniline ;-0.41
 Anilofos;-4.432
@@ -426,7 +421,7 @@ Benzo(e)pyrene;-7.8
 Benzo(j)fluoranthene;-8.0
 Benzo(k)fluoranthene;-8.49
 Benzo[ghi]perylene;-9.018
-Benzocaine;-2.616
+Benzocaine;-2.358
 benzoin;-2.85
 Benzonitrile;-1.0
 Benzophenone;-3.12
@@ -502,12 +497,11 @@ Chloropicrin;-2.0
 chloropropylate;-4.53
 Chlorothalonil;-5.64
 chlorothiazide;-3.05
-Chlorotoluron;-3.46
+Chlorotoluron;-3.4715
 Chloroxuron;-4.89
 chlorpyrifos;-5.67
 chlorquinox;-5.43
 Chlorthalidone;-3.451
-Chlortoluron;-3.483
 Chlorzoxazone;-2.831
 Cholanthrene;-7.85
 Chrysene;-8.057
@@ -566,7 +560,6 @@ dexamethasone acetate;-4.9
 D-fenchone;-1.85
 Di(2-ethylhexyl)-phthalate;-6.96
 Dialifor;-6.34
-Dialifos;-6.34
 Diallate;-4.286
 Diazepam;-3.754
 Diazinon;-3.64
@@ -580,7 +573,7 @@ Dicapthon;-4.31
 Dichloromethane;-0.63
 Dichlorophen;-3.953
 Dicofol;-5.666
-Dieldrin;-6.29
+Dieldrin;-6.234999999999999
 Dienestrol;-4.95
 Dienochlor;-7.278
 Diethyl ether ;-0.09
@@ -605,7 +598,7 @@ Dimethoxymethane;0.48
 Dimethyl phthalate;-1.66
 Dimethyl sulfide;-0.45
 Dimethyldisulfide;-1.44
-Dinitramine;-5.47
+Dinitramine;-4.515499999999999
 Dinoseb;-3.38
 d-inositol;0.35
 Di-n-propylsulfide;-2.58
@@ -626,8 +619,6 @@ DNOC;-1.456
 Dulcin;-2.17
 Dyphylline;-0.17
 Eicosane;-8.172
-Endrin;-6.18
-Epiandrosterone;-4.16
 Epitostanol;-5.41
 Equilenin;-5.24
 Equilin;-5.282
@@ -647,7 +638,6 @@ Ethion;-5.54
 Ethirimol;-3.028
 Ethisterone;-5.66
 Ethofumesate;-3.42
-ethofumesate;-3.42
 Ethoxyzolamide;-3.81
 Ethyl acetate;-0.04
 Ethyl benzoate ;-2.32
@@ -666,13 +656,11 @@ Ethyl vinyl ether;-0.85
 Ethylbenzene;-2.77
 Ethylcyclohexane;-4.25
 Ethylene;-0.4
-Ethyl-p-aminobenzoate;-2.1
 Ethyl-p-hydroxybenzoate ;-2.35
 Ethyne;0.29
 Etofenprox;-8.6
 Etomidate;-4.735
 Etoposide (148-167,25mg/ml);-3.571
-eucalyptol;-1.64
 Eugenol;-1.56
 Fenarimol;-4.38
 Fenfuram;-3.3
@@ -689,12 +677,11 @@ Flucytosine;-0.972
 Fludrocortisone;-3.43
 Flumethasone;-5.613
 Flumetralin;-6.78
-Fluometuron;-3.43
+Fluometuron;-3.375
 Fluoranthene;-6.0
 Fluorene ;-5.0
 Fluorobenzene;-1.8
 Fluoromethalone;-4.099
-Fluorometuron;-3.32
 Fluridone;-4.445
 Flurochloridone;-4.047
 Flutriafol;-3.37
@@ -769,7 +756,7 @@ karbutilate;-2.93
 kebuzone;-3.27
 Kepone;-5.259
 Khellin;-3.021
-Lactose;-0.244
+Lactose;0.0569999999999999
 L-arabinose;0.39
 Lenacil;-4.594
 linalool;-1.99
@@ -779,8 +766,7 @@ Lorazepam;-3.604
 Lovastatin;-6.005
 Malathion;-3.37
 Malonic acid diethylester;-0.82
-Maltose;0.358
-mannitol;0.06
+mannitol;0.5750000000000001
 m-Chloroaniline;-1.37
 m-Chlorobromobenzene;-3.21
 m-Chloroiodobenzene;-3.55
@@ -836,9 +822,8 @@ Metolachlor;-2.73
 Metolazone;-3.78
 Metolcarb;-1.803
 Metoxuron;-2.564
-Metranidazole;-1.26
+Metranidazole;-1.24
 Metribuzin;-2.253
-Metronidazole;-1.22
 m-Fluorobromobenzene;-2.67
 Minoxidil;-1.989
 Mirex;-6.8
@@ -868,7 +853,6 @@ nifedipine;-4.76
 nifuroxime;-2.19
 Nimetazepam;-3.796
 Niridazole;-3.22
-Nitramine;-3.561
 Nitrapyrin;-3.76
 Nitrazepam;-3.796
 Nitrobenzene;-1.8
@@ -893,8 +877,7 @@ o-Chloronitrobenzene;-2.55
 Octane;-5.24
 O-Ethyl carbamate;0.85
 o-Fluorobromobenzene;-2.7
-o-Hydroxybenzamide;-1.82
-o-Methoxyphenol;-1.96
+o-Hydroxybenzamide;-1.828
 o-Nitroaniline;-1.96
 o-Nitroanisole;-1.96
 o-Nitrophenol;-1.74
@@ -909,12 +892,9 @@ Oxycarboxin;-2.281
 o-Xylene ;-2.8
 oxyphenbutazone;-3.73
 p,p'-Biphenyldiamine ;-2.7
-P,P'-DDD;-7.2
-P,P'-DDE;-6.9
 p-Aminophenol;-0.8
 parabanic acid;-0.4
 Parathion;-4.66
-p-benzidine;-2.7
 p-Bromoacetanilide;-3.083
 p-Bromoiodobenzene;-4.56
 p-Chloroacetanilide;-2.843
@@ -944,7 +924,6 @@ Phenanthrene;-5.26
 phenanthridine;-2.78
 Phenetole;-2.33
 Phenmedipham;-4.805
-phenobarbital;-2.322
 Phenol;0.0
 phenolphthalein;-2.9
 phenothrin;-5.24
@@ -979,7 +958,6 @@ Prednisolone;-3.18
 prednisolone acetate;-4.37
 pregnenolone;-4.65
 Primidone;-2.64
-probarbital;-2.21
 Procymidone;-4.8
 Progesterone;-4.42
 Prometon;-2.478
@@ -1037,24 +1015,21 @@ RTI 16;-4.634
 RTI 17;-4.706
 RTI 19;-4.749
 RTI 2;-2.86
-RTI 20;-4.799
+RTI 20;-4.167
 RTI 22;-4.871
 RTI 23;-5.153
 RTI 24;-5.36
 RTI 3;-3.043
 RTI 5;-3.324
 RTI 6;-3.36
-RTI 7;-3.535
 RTI 9;-3.68
 Salicin;-0.85
-Salicylamide;-1.836
 salicylanilide;-3.59
 Santonin;-3.09
 Secobarbital;-2.356
 Siduron;-4.11
 simazine;-4.55
 Simetryn;-2.676
-Sorbitol;1.09
 Sparsomycin (3,8mg/ml);-1.981
 Spironolactone;-4.173
 stadacaine;-3.84
@@ -1118,7 +1093,6 @@ Triazolam;-4.09
 Tribromomethane;-1.91
 Trichlomethiazide;-2.68
 Trichlorfon;-0.22
-trichlormethiazide;-2.68
 Trichloroacetonitrile;-2.168
 Trichloroethylene;-1.96
 Trichloromethane;-1.17
