@@ -6,6 +6,7 @@ running an Evaluator and collecting its results.
 import os
 import pickle
 import shutil
+import warnings
 
 import pandas as pd
 
@@ -143,6 +144,9 @@ def run_evaluation(model, task, X, y, verbose=True, repetitions=N_REPS,
     if normalize:
         evaluator.set_scaler_class(Normalizer)
         evaluator.scale = True
+    # Check for equivalent indexes
+    if not (X.index == y.index).all():
+        warnings.warn('Warning! X and y have different indexes/order.')
     # Run evaluation
     evaluator.perform(X, y)
     # Store input space transformers, models, and single repetition
