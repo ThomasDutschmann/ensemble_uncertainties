@@ -358,7 +358,7 @@ def write_report(args, evaluator):
         f.write(f'Train {metric_name}:       {train_quality:.3f}\n')
         f.write(f'Test {metric_name}:        {test_quality:.3f}\n')
         if args.task == 'regression':
-            area, rho = compute_auco_and_rho(evaluator)
+            area, rho = evaluator.auco, evaluator.rho
             f.write(f'AUCO:           {area:.3f}\n')
             f.write(f"Spearman's rho:  {rho:.3f}\n")
         f.write(f'Overall runtime: {formatted_runtime}\n')
