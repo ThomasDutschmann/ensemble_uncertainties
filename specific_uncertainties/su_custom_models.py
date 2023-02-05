@@ -1,7 +1,6 @@
 
 """Wrapper classes for regressors that can be tuned to yield uncertainties."""
 
-from ensemble_uncertainties.constants import V_THRESHOLD
 import numpy as np
 import pandas as pd
 
