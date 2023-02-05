@@ -10,6 +10,9 @@ from ensemble_uncertainties.constants import (
     V_THRESHOLD
 )
 from ensemble_uncertainties.evaluators.evaluator import Evaluator
+from ensemble_uncertainties.utils.ad_assessment import (
+    auco, rmses_frac, spearman_coeff
+)
 
 from sklearn.metrics import r2_score
 
@@ -36,7 +39,7 @@ class RegressionEvaluator(Evaluator):
         self.metric = r2_score
         self.metric_name = 'R^2'
 
-    # override
+    # Override unimplemented method
     def handle_predictions(self, predictions):
         """Computes means and standard deviations.
 
@@ -61,3 +64,14 @@ class RegressionEvaluator(Evaluator):
         results['resid'] = adjusted_y['y'] - results['predicted']
         quality = self.metric(adjusted_y['y'], results['predicted'])
         return results, quality
+
+    def finalize(self):
+        """Run parent function, compute UQ evaluation metrics."""
+        super().finalize()
+        resids = self.test_ensemble_preds['resid']
+        uncertainties = self.test_ensemble_preds['sdep']
+        oracle_rmses, measure_rmses = rmses_frac(resids, uncertainties)
+        area = auco(oracle_rmses, measure_rmses)
+        rho = spearman_coeff(resids, uncertainties)
+        self.auco = area
+        self.rho = rho
