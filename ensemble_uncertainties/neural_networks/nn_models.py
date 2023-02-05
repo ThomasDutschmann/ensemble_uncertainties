@@ -2,7 +2,13 @@
 """Wrappers for our feed forward neural estimators."""
 
 import logging
+# Turn off logging
+logging.getLogger('tensorflow').setLevel(logging.FATAL)
+
 import os
+# Make deterministic, part 1
+os.environ['TF_DETERMINISTIC_OPS'] = '1'
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
 
 import numpy as np
 
@@ -21,10 +27,7 @@ from ensemble_uncertainties.constants import (
     RANDOM_SEED
 )
 
-
-# Turn off logging
-logging.getLogger('tensorflow').setLevel(logging.FATAL)
-# Make deterministic
+# Make deterministic, part 2
 os.environ['TF_DETERMINISTIC_OPS'] = '1'
 tf.random.set_seed(RANDOM_SEED)
 tf.keras.utils.set_random_seed(RANDOM_SEED)
