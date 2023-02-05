@@ -314,27 +314,6 @@ def results_tables_to_file(evaluator, path):
     evaluator.test_ensemble_preds.to_csv(f'{epath}test.csv', sep=';')
 
 
-def compute_auco_and_rho(evaluator):
-    """Computes raw AUCO and Spearman's coefficient for a given evaluator.
-    
-    Parameters
-    ----------
-    evaluator : Evaluator
-        Performed Evaluator-object
-        
-    Returns
-    -------
-    float, float
-        AUCO, Spearman's rank
-    """
-    resids = evaluator.test_ensemble_preds['resid']
-    uncertainties = evaluator.test_ensemble_preds['sdep']
-    oracle_rmses, measure_rmses = rmses_frac(resids, uncertainties)
-    area = auco(oracle_rmses, measure_rmses)
-    rho = spearman_coeff(resids, uncertainties)
-    return area, rho
-
-
 def write_report(args, evaluator):
     """Writes informative summary file.
 
