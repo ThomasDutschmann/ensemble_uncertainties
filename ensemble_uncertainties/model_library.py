@@ -31,9 +31,7 @@ models['classification']['rf'] = RandomForestClassifier()
 models['classification']['dt'] = DecisionTreeClassifier()
 models['classification']['svm_rbf'] = SVC(kernel='rbf')
 models['classification']['svm_tanimoto'] = SVC(kernel=tanimoto)
-models['classification']['xgb'] = XGBClassifier(
-    use_label_encoder=False, silent=1, verbosity=0
-)
+models['classification']['xgb'] = XGBClassifier(silent=1, verbosity=0)
 models['classification']['deep'] = DeepNeuralClassifier()
 models['classification']['shallow'] = ShallowNeuralClassifier()
 
