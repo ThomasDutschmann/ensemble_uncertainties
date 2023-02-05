@@ -29,7 +29,7 @@ parser.add_argument(
     '--independent',
     dest='X_path',
     type=str,
-    help='path to file of dependent variables (X)',
+    help='path to file of independent variables (X)',
     required=True,
     default=None
 )
@@ -39,7 +39,7 @@ parser.add_argument(
     '--dependent',
     dest='y_path',
     type=str,
-    help='path to file of independent variables (y)',
+    help='path to file of dependent variables (y)',
     required=True,
     default=None
 )
