@@ -51,13 +51,13 @@ def deep_architecture_dropout(dropout_rate=0.2):
         # Create model. To apply dropout during inference,
         # the functional format must be used:
         inp = Input(shape=(n_vars,))
-        x = Dropout(dropout_rate)(inp)
+        x = Dropout(dropout_rate, seed=0)(inp)
         x = Dense(256, activation='relu')(x)
-        x = Dropout(dropout_rate)(x)
+        x = Dropout(dropout_rate, seed=0)(x)
         x = Dense(128, activation='relu')(x)
-        x = Dropout(dropout_rate)(x)
+        x = Dropout(dropout_rate, seed=0)(x)
         x = Dense(16, activation='relu')(x)
-        x = Dropout(dropout_rate)(x)
+        x = Dropout(dropout_rate, seed=0)(x)
         out = Dense(1, activation='linear')(x)
         architecture = Model(inp, out)
         return architecture
@@ -85,13 +85,13 @@ def deep_architecture_mc_dropout(dropout_rate=0.2):
         # Create model. To apply dropout during inference,
         # the functional format must be used:
         inp = Input(shape=(n_vars,))
-        x = Dropout(dropout_rate)(inp)
+        x = Dropout(dropout_rate, seed=0)(inp)
         x = Dense(256, activation='relu')(x)
-        x = Dropout(dropout_rate)(x, training=True)
+        x = Dropout(dropout_rate, seed=0)(x, training=True)
         x = Dense(128, activation='relu')(x)
-        x = Dropout(dropout_rate)(x, training=True)
+        x = Dropout(dropout_rate, seed=0)(x, training=True)
         x = Dense(16, activation='relu')(x)
-        x = Dropout(dropout_rate)(x, training=True)
+        x = Dropout(dropout_rate, seed=0)(x, training=True)
         out = Dense(1, activation='linear')(x)
         architecture = Model(inp, out)
         return architecture

@@ -27,6 +27,8 @@ logging.getLogger('tensorflow').setLevel(logging.FATAL)
 # Make deterministic
 os.environ['TF_DETERMINISTIC_OPS'] = '1'
 tf.random.set_seed(RANDOM_SEED)
+tf.keras.utils.set_random_seed(RANDOM_SEED)
+tf.config.experimental.enable_op_determinism()
 # Set growth ability of GPU memory (if available)
 gpus = tf.config.experimental.list_physical_devices(device_type='GPU')
 if len(gpus) > 0:
