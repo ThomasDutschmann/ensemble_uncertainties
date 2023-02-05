@@ -2,14 +2,14 @@ name: ensemble_uncertainties
 channels:
   - conda-forge
 dependencies:
-  - python
-  - pip
-  - jupyterlab
-  - matplotlib
-  - numpy
-  - pandas
-  - scikit-learn
-  - seaborn
-  - tensorflow>=2.8.1
-  - tqdm
-  - xgboost
+  - python=3.10.8
+  - pip=22.3.1
+  - jupyterlab=3.5.2
+  - matplotlib=3.6.3
+  - numpy=1.24.1
+  - pandas=1.5.3
+  - scikit-learn=1.2.0
+  - seaborn=0.12.2
+  - tensorflow=2.11.0
+  - tqdm=4.64.1
+  - xgboost=1.7.1
