@@ -97,6 +97,8 @@ def su_run_evaluation(X, y, model, n_splits=N_SPLITS, seed=RANDOM_SEED,
     results, predictive_quality, uncertainty_quality = eval_results
     path = extend_path(path)
     make_folder(path)
+    results['id'] = list(y.index)
+    results = results.set_index('id')
     results.to_csv(f'{path}results.csv', sep=';')
     plots_path = f'{path}plots/'
     make_folder(plots_path)
@@ -105,7 +107,7 @@ def su_run_evaluation(X, y, model, n_splits=N_SPLITS, seed=RANDOM_SEED,
     plot_scatter(results['resid'].abs(), uncertainties, path=plots_path)
     print()
     print(f'R^2: {predictive_quality:.3f}')
-    print(f'rho: {uncertainty_quality:3f}')
+    print(f'rho: {uncertainty_quality:.3f}')
     print(f'Took {took}')
     print()
     su_write_report(args, model, predictive_quality, uncertainty_quality,
