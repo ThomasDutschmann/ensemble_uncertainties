@@ -42,3 +42,6 @@ ENV/
 
 # Test results
 test_results/
+
+# Original publication data folder
+publication/
